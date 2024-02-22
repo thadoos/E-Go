@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "580213313338",
+    "firebase_url": "https://e-go-6c68e-default-rtdb.firebaseio.com",
+    "project_id": "e-go-6c68e",
+    "storage_bucket": "e-go-6c68e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580213313338:android:b76d26dc35d51eb0f14a03",
+        "android_client_info": {
+          "package_name": "com.anonymous.EGo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF5gZ2WzY2c0gyOatgsxLrDFXL6tN1I-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

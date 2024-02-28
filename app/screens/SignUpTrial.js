@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Pressable, Platform } from 'react-native';
 import React, { useState } from 'react';
-import StylesGeneral from '../../styles/StylesGeneral';
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from 'react-native-element-dropdown';
-import DateTimePicker from "@react-native-community/datetimepicker"
+import DatePicker from 'react-native-date-picker'
+
+import StylesGeneral from '../../styles/StylesGeneral';
 import { colors } from '../../styles/colors';
 
 
@@ -20,52 +21,11 @@ export default SignUpTrial = ({navigation}) => {
     dob:new Date(),
   })
 
-  const [showDatePicker, setShowDatePicker]=  useState(false);
+  const [openDate, setOpenDate] = useState(false);
 
-  const toggleDatepicker = () => {
-    setShowDatePicker(!showDatePicker)
-  }
-
-  const onDateChange = ( { type }, selectedDate) => {
-    if (type == "set") {
-      const currentDate = selectedDate;
-      setShowDatePicker(currentDate);
-
-      if (Platform.OS === "android") {
-        toggleDatepicker();
-        setUser(prevState => ({...prevState, dob:currentDate.toDateString()}));
-      }
-
-    } else {
-      toggleDatepicker();
-    }
-  }
-
-  const confirmIOSDate = () => {
-    setUser(prevState => ({...prevState, dob:user.dob.toDateString()}));
-    toggleDatepicker;
-  }
 
   const [roleFocus, setRoleFocus] = useState(false);
   const [genderFocus, setGenderFocus] = useState(false);
-
-  const [dob, setDOB] = useState({
-    day: '1',
-    month: '1',
-    year:'2000',
-  })
-
-  const updateDOB = () => {
-    setUser(prevState => ({
-      ...prevState, 
-      dob:new Date(
-        parseInt(dob.year, 10), 
-        parseInt(dob.month, 10) - 1, // Subtract 1 to adjust for JavaScript's 0-indexed months
-        parseInt(dob.day, 10)
-      )
-    }));
-
-  }
 
   const roles = [
     { label:'Doctor', value:'Doctor' },
@@ -147,7 +107,6 @@ export default SignUpTrial = ({navigation}) => {
 
         <View style = {styles.inputSubContainer}>
           <Ionicons
-            // name="lock-closed"
             name="key"
             size={20}
             color={colors.textfieldIcon}
@@ -174,8 +133,7 @@ export default SignUpTrial = ({navigation}) => {
             style = {styles.textFieldContainer} 
             placeholder="Address" 
             
-            value={user.dob}
-            mode="date"
+            value={user.address}
             
             onChangeText={(newText)=> {
               setUser(prevState => ({...prevState, address:newText}));
@@ -183,102 +141,75 @@ export default SignUpTrial = ({navigation}) => {
           />
         </View>
 
-        {/* <View style = {styles.dateContainer}>
+        <View style={styles.dateContainer}>
+
           <Ionicons
-            name='calendar'
+            name="calendar"
             size={20}
             color={colors.textfieldIcon}
             style={styles.textFieldIcon}
           />
 
-        </View> */}
-
-          <View style={styles.dateContainer}>
-
-            <Ionicons
-              name="calendar"
-              size={20}
-              color={colors.textfieldIcon}
-              style={styles.textFieldIcon}
+          {openDate ? (
+            <DatePicker
+              modal
+              open = {openDate}
+              date = { user.dob }
+              onConfirm={(date) => {
+                setOpenDate(false)
+                setUser(prevState => ({...prevState, dob:date}));
+              }}
+              onCancel={() => {
+                setOpenDate(false)
+              }}
             />
-
-            <View style={styles.dateWithoutIconContainer}>
-              <View style = {styles.dateFieldContainer}>
-
-
-                
-                {showDatePicker && (
-                  <DateTimePicker
-                    mode = "date"
-                    display="spinner"
-                    value = { user.dob }
-                    onChange= { onDateChange }
-                    style={styles.datePicker}
-                  />
-                )}
-
-                {showDatePicker && Platform.OS==="ios" && (
-                  <View
-                      style={styles.datePickerButtonsContainer}
-                  >
-                    <TouchableOpacity 
-                      style = {styles.datePickerButton}
-                      onPress={toggleDatepicker}
-                    >
-                      <Text style={styles.dateButtonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                      style = {styles.datePickerButton}
-                      onPress={confirmIOSDate}
-                    >
-                      <Text style={styles.dateButtonText}>OK</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                )}
+          ) : (
+            // <TouchableOpacity
+            //   style={styles.dateTextTouchable}
+            //   onPress={() => setOpenDate(true)}
+            // >
+            //   <TextInput 
+            //     style={ styles.dateTextField }
+            //     placeholder = "Date of Birth"
+            //     value = { user.dob }  
+            //     // value={selectedDate ? selectedDate.toDateString() : ''}
+            //     mode="date"
+            //     editable={false}
+            //   />
 
 
-                {!showDatePicker && (
-                  <Pressable onPress={toggleDatepicker}>
-                    <TextInput 
-                      style = {styles.textFieldContainer} 
-                      placeholder="Date of Birth" 
-                      value= { user.dob }
-                      editable={ false }
-                      onPressIn={toggleDatepicker}
-                      onChangeText={(newText)=> {
-                        setDOB(prevState => ({...prevState, day:newText}));
-                        updateDOB();
-                      }}
-                    />
-                  </Pressable>  
+            // </TouchableOpacity>
+            
+            <TextInput 
+              style={ styles.dateTextField }
+              placeholder = "Date of Birth"
+              value = { user.dob }  
+              // value={selectedDate ? selectedDate.toDateString() : ''}
+              mode="date"
+              editable={true}
+              onFocus={setOpenDate(true)}
+            >
 
-                )}
-              </View>
-              {/* <View style = {styles.dateFieldContainer}>
-                <TextInput 
-                  style = {styles.textFieldContainer} 
-                  placeholder="Month" 
-                  onChangeText={(newText)=> {
-                    setDOB(prevState => ({...prevState, month:newText}));
-                    updateDOB();
-                  }}
-                />
-              </View>
-              <View style = {styles.dateFieldContainer}>
-                <TextInput 
-                  style = {styles.textFieldContainer} 
-                  placeholder="Year" 
-                  onChangeText={(newText)=> {
-                    setDOB(prevState => ({...prevState, year:newText}));
-                    updateDOB();
+              {/* <TouchableOpacity
+                style={styles.dateTextTouchable}
+                onPress={() => setOpenDate(true)}
+              >
+              </TouchableOpacity> */}
+            </TextInput>
 
-                  }}
-                />
-              </View> */}
-            </View>
 
-          </View>
+          )}
+
+          
+
+
+          {/* <TouchableOpacity style={ styles.dateTextField }>
+            <Text style = {styles.datePlaceholderText }>Date of Birth</Text>
+          </TouchableOpacity> */}
+
+          
+
+        </View>
 
         <View style={styles.genderNRoleContainer}>
          <Ionicons
@@ -288,7 +219,6 @@ export default SignUpTrial = ({navigation}) => {
             style={styles.textFieldIcon}
           />
           <View style = {styles.roleContainer}>
-            {/* <View style = {styles.inputSubContainer}> */}
               
               <Dropdown
                 style={[styles.dropdown, roleFocus && { borderColor: 'blue' }]}
@@ -312,9 +242,6 @@ export default SignUpTrial = ({navigation}) => {
                   setRoleFocus(false);
                 }}
               />
-
-  
-
 
           </View>
 
@@ -360,18 +287,6 @@ export default SignUpTrial = ({navigation}) => {
 
         <View style={styles.buttonContainer}>
 
-          <TouchableOpacity style={styles.backButton2} onPress={()=>navigation.goBack()}>
-              <Ionicons
-                name='arrow-back'
-                color={'#fff'}
-                size={30}
-                alignSelf='center'
-                justifyContent='center'
-                marginTop={5}
-              />
-              {/* <Text style={styles.backButtonIcon}>{'<'}</Text> */}
-          </TouchableOpacity>
-
           <TouchableOpacity style = {styles.signupButton} onPress={() => {
             console.log(user.firstName)
             console.log(user.lastName)
@@ -386,13 +301,13 @@ export default SignUpTrial = ({navigation}) => {
             <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>
 
-          {/* <View style={styles.backContainer}>
+          <View style={styles.backContainer}>
             <Text style={styles.backDescriptionText}>Back to Login?</Text>
             <TouchableOpacity onPress={()=>navigation.goBack()}>
               <Text style={styles.backButton}>Login</Text>
             </TouchableOpacity>
 
-          </View> */}
+          </View>
 
         </View>
 
@@ -410,9 +325,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     justifyContent: 'flex-start',
-    // justifyContent:'center',
     paddingTop: 100,
-    // paddingTop: 80,
     alignItems: 'center',
     paddingHorizontal:20,
   },
@@ -440,7 +353,6 @@ const styles = StyleSheet.create({
 
   signupText: {
     textAlign: 'center',
-    // paddingLeft: 30,
     marginBottom: 20,
     fontWeight: '800',
     fontSize: 25,
@@ -534,6 +446,31 @@ const styles = StyleSheet.create({
 
     // borderColor:'red',
     // borderWidth: 1,
+  },
+
+  dateTextTouchable:{
+    height: 30,
+    // backgroundColor:'#fff',
+    color: colors.textDark,
+    width: '100%',      
+
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: colors.textfieldBorder,
+  },  
+
+  dateTextField:{
+    height: 30,
+    backgroundColor:'#fff',
+    color: colors.textDark,
+    width: '100%',
+    
+    fontSize: 14,
+    paddingLeft: 15,
+
+    borderRadius: 15,
+    borderWidth: 0,
+    borderColor: colors.textfieldBorder,
   },
 
   dateWithoutIconContainer:{
@@ -655,8 +592,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems:'stretch',
     marginTop: 5,
-    flexDirection: 'row',
-    justifyContent:'flex-start',
+    flexDirection: 'column',
+    justifyContent:'space-between',
 
   },
 
@@ -664,8 +601,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     
-    // width: '100%',
-    flex: 1,
+    width: '100%',
+    // flex: 1,
     borderRadius: 15,
     height: 40,
     // backgroundColor: colors.buttonColor,
@@ -674,6 +611,14 @@ const styles = StyleSheet.create({
     // backgroundColor: 'hsl(216,48.6%,0%)',
 
     marginBottom: 15,
+  },
+
+  backDescriptionText: {
+    color: '#000',
+    fontSize: 14,
+    marginRight: 5,
+    fontWeight: '500',
+    marginRight: 15,
   },
 
   signupButtonText:{
@@ -691,13 +636,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  backDescriptionText: {
-    color: '#000',
-    fontSize: 14,
-    marginRight: 5,
-    fontWeight: '500',
-    marginRight: 15,
-  },
+
 
   backButton: {
     color: '#088AE8',
@@ -705,22 +644,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   
-  backButton2:{
-    color:'#222222',
-    width: 40,
-    marginRight: 5,
-    borderRadius: 15,
-    height: 40,
-    // backgroundColor: '#94B0DA',
-    // backgroundColor: 'hsl(216,48.6%,0%)',
-    backgroundColor: 'hsl(216,0%,35%)',
-    // backgroundColor: '#DCEDFF',
-  },
-
-  backButtonIcon: {
-
-  },
-
 
   
 

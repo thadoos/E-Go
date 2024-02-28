@@ -23,6 +23,7 @@ const FrontPage = ({ navigation }) => {
             style={styles.input}
             keyboardType="email-address"
           />
+
           <TextInput
             placeholder="Password"
             style={styles.input}
@@ -30,7 +31,7 @@ const FrontPage = ({ navigation }) => {
           />
         </View>
         
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Log In')}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       paddingHorizontal: 10,
       borderRadius: 20,
-      borderWidth: 1,
+      borderWidth: .5,
       borderColor: 'black',
       textAlign: 'left',
       paddingLeft: 15,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     },
     signupButton: {
       color: '#088AE8',
-      fontSize: 16,
+      // fontSize: 16,
       fontWeight: '800',
 
     }

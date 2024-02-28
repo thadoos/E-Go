@@ -2,11 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
-import DropdownComponent from './app/screens/DropdownComponent';
 import FrontPage from './app/screens/FrontPage';
+
 import SignUp from './app/screens/SignUp';
-import SignUpPage from './app/screens/SignUpPage'
-import SignUpTrial from './app/screens/SignUpTrial';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,9 +14,6 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{headerShown:false}} 
       >
-     
-        
-        
         <Stack.Screen 
           name="Login" 
           component = { FrontPage } 
@@ -27,7 +22,7 @@ export default function App() {
 
         <Stack.Screen 
           name="Sign Up" 
-          component = { SignUpTrial } 
+          component = { SignUp } 
           options = {{
             headerStyle: {
               backgroundColor: '#DCE1DE',
@@ -38,7 +33,7 @@ export default function App() {
 
         <Stack.Screen 
           name="Log In" 
-          component = { SignUp } 
+          component = { SignUp } // To be changed once the dashboard is done
           options = {{
             headerStyle: {
               backgroundColor: '#DCE1DE',

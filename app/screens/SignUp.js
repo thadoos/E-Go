@@ -1,18 +1,27 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
-import StylesGeneral from '../../styles/StylesGeneral';
 import { Ionicons } from "@expo/vector-icons";
-import { Picker } from '@react-native-picker/picker';
 import { Dropdown } from 'react-native-element-dropdown';
+import DatePicker from 'react-native-date-picker'
 
-const SignUp = ({ navigation }) => {
+import { colors } from '../../styles/colors';
+
+
+export default SignUp = ({navigation}) => {
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "",
     avatar: null,
+    firstName:"",
+    lastName:"",
+    email:"",
+    password:"",
+    address:"",
+    role:"",
+    gender:"", 
+    dob:null,
   });
+
+  const [openDate, setOpenDate] = useState(false);
+
 
   const [roleFocus, setRoleFocus] = useState(false);
   const [genderFocus, setGenderFocus] = useState(false);
@@ -23,154 +32,280 @@ const SignUp = ({ navigation }) => {
     { label:'Civilian', value:'Civilian' },
   ];
 
-  const renderLabel = () => {
-    if (user.role || roleFocus) {
-      return (
-        <Text style= {[styles.label, roleFocus && { color: '#888888' }]}>
-          Role
-        </Text>
-      );
-    }
-    return null;
-  };
-
-  
-
-
+  const genders = [
+    {label: 'Male', value: 'Male'},
+    {label: 'Female', value: 'Female'},
+    {label: 'Other', value: 'Other'},
+  ];
 
   return (
-    <View style = {styles.container}>
-      <TouchableOpacity style={ styles.avatarPlaceHolder }>
-        <Image source={{ uri:user.avatar }} style={ styles.avatar } />
+    <View style={styles.container}>
+      <Text style = {styles.signupText}>Sign Up</Text>
+      
+      <TouchableOpacity style = {styles.avatarPlaceholder}>
+        <Image source={{uri: user.avatar}} style={styles.avatar}/>
         <Ionicons
           name="add"
           size={40}
           color={'#000000'}
-          style={{marginTop:6, marginLeft: 2}}
         ></Ionicons>
       </TouchableOpacity>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="First Name"
-          style={styles.input}
-          keyboardType='default'
-        />
-        <TextInput
-          placeholder="Last Name"
-          style={styles.input}
-          keyboardType='default'
-        />
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          keyboardType="email-address"
-        />
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          secureTextEntry
-        />
-        <TextInput
-          placeholder="Address"
-          style={styles.input}
-          keyboardType='default'
-        />
+      
+        <View style={styles.nameContainer}>
+
+          <Ionicons
+            name="person"
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
+          />
+
+          <View style={styles.nameWithoutIconContainer}>
+            <View style = {styles.nameFieldContainer}>
+              <TextInput 
+                style = {styles.textFieldContainer} 
+                placeholder="First Name" 
+                onChangeText={(newText)=> {
+                  setUser(prevState => ({...prevState, firstName:newText}));
+                }}
+              />
+            </View>
+            <View style = {styles.nameFieldContainer}>
+              <TextInput 
+                style = {styles.textFieldContainer} 
+                placeholder="Last Name" 
+                onChangeText={(newText)=> {
+                  setUser(prevState => ({...prevState, lastName:newText}));
+                }}
+              />
+            </View>
+          </View>
+
+        </View>
 
         
-
-        <View style={styles.roleAndGenderContainer}>
-
-          {/* {renderLabel()} */}
-          
-          <Dropdown
-            style={[styles.dropdown, roleFocus && { borderColor: 'blue' }]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-
-            data={roles}
-
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={!roleFocus ? 'Select Role' : '...'}
-            
-            // inputSearchStyle={styles.inputSearchStyle}
-            // search
-            // searchPlaceholder="Search..."
-            
-
-            value={user.role}
-            onFocus={() => setRoleFocus(true)}
-            onBlur={() => setRoleFocus(false)}
-            onChange={item => {
-              setUser(prevState => ({...prevState, role:item.value}));
-              // setValue(item.value);
-              setRoleFocus(false);
+        <View style = {styles.inputSubContainer}>
+          <Ionicons
+            name="mail"
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
+          />
+          <TextInput 
+            style = {styles.textFieldContainer} 
+            placeholder="Email" 
+            autoCapitalize='none'
+            onChangeText={(newText)=> {
+              setUser(prevState => ({...prevState, email:newText}));
             }}
           />
+        </View>
 
-          {/* <Picker
-            placeholder='Role' 
-            mode='dropdown'
-            style={ styles.rolePicker }
-            itemStyle= { styles.pickerItemStyle }
-            selectedValue = { user.role }
-            onValueChange={(itemValue, itemIndex) => {
-              if(itemValue != ""){
-                setUser(prevState => ({ ...prevState, role: itemValue }));
-              }
-            }}
-          >
-            <Picker.Item label="Role" value=""/>
-            <Picker.Item label="Paramedic" value="Paramedic"/>
-            <Picker.Item label="Doctor" value="Doctor"/>
-            <Picker.Item label="NA" value="NA"/>
-          </Picker> */}
-
-          {/* <TextInput
-            placeholder="Role"
-            style={styles.roleInput}
-            keyboardType='default'
-          /> */}
-          
-          <TextInput
-            placeholder="Gender"
-            style={styles.genderInput}
-            keyboardType='default'
+        <View style = {styles.inputSubContainer}>
+          <Ionicons
+            name="key"
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
           />
+          <TextInput 
+            style = {styles.textFieldContainer} 
+            placeholder="Password" 
+            secureTextEntry
+            onChangeText={(newText)=> {
+              setUser(prevState => ({...prevState, password:newText}));
+            }}
+          />
+        </View>
+
+        <View style = {styles.inputSubContainer}>
+          <Ionicons
+            name='map'
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
+          />
+          <TextInput 
+            style = {styles.textFieldContainer} 
+            placeholder="Address" 
+            
+            value={user.address}
+            
+            onChangeText={(newText)=> {
+              setUser(prevState => ({...prevState, address:newText}));
+            }}
+          />
+        </View>
+
+        <View style={styles.dateContainer}>
+
+          <Ionicons
+            name="calendar"
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
+          />
+
+          <TextInput 
+            style={ styles.dateTextField }
+            placeholder = "Date of Birth"
+            // value = { user.dob }  
+            value={user.dob ? user.dob.toDateString() : ''}
+            mode="date"
+            editable={true}
+            autoFocus={false}
+            onFocus={() => setOpenDate(true)}
+          />
+
+
+          {openDate && (
+            <DatePicker
+              modal
+              locale = 'en'
+              mode='date'
+              open = {openDate}
+              date = { new Date() }
+              onConfirm={(date) => {
+                setOpenDate(false);
+                setUser(prevState => ({...prevState, dob:date}));
+              }}
+              onCancel={() => setOpenDate(false)}
+            />
+          )}
+
+
+        </View>
+
+        <View style={styles.genderNRoleContainer}>
+         <Ionicons
+            name='bag'
+            size={20}
+            color={colors.textfieldIcon}
+            style={styles.textFieldIcon}
+          />
+          <View style = {styles.roleContainer}>
+              
+              <Dropdown
+                style={[styles.dropdown, roleFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                itemTextStyle= {styles.dropdownTextStyle}
+
+                data={roles}
+
+                maxHeight={200}
+                labelField="label"
+                valueField="value"
+                placeholder={!roleFocus ? 'Role' : '...'}              
+
+                value={user.role}
+                onFocus={() => setRoleFocus(true)}
+                onBlur={() => setRoleFocus(false)}
+                onChange={item => {
+                  setUser(prevState => ({...prevState, role:item.value}));
+                  setRoleFocus(false);
+                }}
+              />
+
+          </View>
+
+          <View style = {styles.genderContainer}>
+            <View style = {styles.inputSubContainer}>
+              <Ionicons
+                name='male-female'
+                size={20}
+                color={colors.textfieldIcon}
+                style={styles.textFieldIcon}
+              />
+              <Dropdown
+                style={[styles.dropdown, genderFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                itemTextStyle= {styles.dropdownTextStyle}
+
+                data={genders}
+                maxHeight={200}
+                labelField="label"
+                valueField="value"
+                placeholder={!genderFocus ? 'Gender' : '...'}
+
+
+
+                value={user.gender}
+                onFocus={() => setGenderFocus(true)}
+                onBlur={() => setGenderFocus(false)}
+                onChange={item => {
+                  setUser(prevState => ({...prevState, gender:item.value}));
+                  setGenderFocus(false);
+                }}
+              />
+
+            </View>
+
+          </View>
+
+        </View>
+
+
+        <View style={styles.buttonContainer}>
+
+          <TouchableOpacity style = {styles.signupButton} onPress={() => {
+            console.log(user.firstName)
+            console.log(user.lastName)
+            console.log(user.email)
+            console.log(user.password)
+            console.log(user.address)
+            console.log(user.dob)
+            console.log(user.role)
+            console.log(user.gender)
+            // Functionality TO BE ADDED
+            
+          }}>
+            <Text style={styles.signupButtonText}>Sign Up</Text>
+          </TouchableOpacity>
+
+
+        </View>
+
+        <View style={styles.backContainer}>
+          <Text style={styles.backDescriptionText}>Back to Login?</Text>
+          <TouchableOpacity onPress={()=>navigation.goBack()}>
+            <Text style={styles.backButton}>Login</Text>
+          </TouchableOpacity>
 
         </View>
       </View>
-
       
+
 
     </View>
   )
 }
 
-export default SignUp
-
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     flex: 1,
-    // backgroundColor: '#DCE1DE',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.background,
     justifyContent: 'flex-start',
+    paddingTop: 100,
     alignItems: 'center',
     paddingHorizontal:20,
-},
+  },
 
-  avatarPlaceHolder:{
+  avatarPlaceholder:{
     width:200,
     height:200,
     borderRadius:100,
-    backgroundColor: '#E1E2E6',
-    marginTop: 48,
+    borderColor: colors.placeholderText,
+    borderWidth: 0.5,
+    backgroundColor: '#fff',
+    marginTop: 15,
     justifyContent: "center",
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 40,
   },
 
   avatar: {
@@ -178,121 +313,194 @@ const styles = StyleSheet.create({
     width:200,
     height:200,
     borderRadius:100,
-    borderColor: 'black',
-    borderWidth: 1,
+
   },
 
-  inputContainer:{
-    width: '80%',
+  signupText: {
+    textAlign: 'center',
+    marginBottom: 20,
+    fontWeight: '800',
+    fontSize: 25,
+  },
+
+  inputContainer:{ // This is the container for all input fields
+    width: '70%',
     alignItems: 'stretch',
   },
 
-  input:{
+  inputSubContainer:{ // This will be the container wrapping the textinput component and icon
+    width: '100%',
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    marginBottom: 15,
+    justifyContent:'flex-end',
+  },
+
+  textFieldIcon: { // Styling the icon for the text field
+    marginTop: 5,
+    marginRight: 10,
+  },
+
+  textFieldContainer: { // This is for text input components
+    height: 30,
+    backgroundColor:'#fff',
+    color: colors.textDark,
+    width: '100%',
+    
+    fontSize: 14,
+      
+    paddingLeft: 15,
+
+    borderRadius: 15,
+    borderWidth: 0,
+    borderColor: colors.textfieldBorder,
+  },
+
+ 
+
+  nameContainer:{
     width: '100%',
     height: 30,
-    backgroundColor:'#fff',
-    color: '#000',
-    
-    fontSize: 16,
-      
-    marginBottom: 15,
-    paddingLeft: 15,
-
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#888888',
-
-  },
-
-  roleAndGenderContainer:{
     alignItems: 'stretch',
-    justifyContent: 'space-between',
-    marginBottom: 15,
+    justifyContent: 'flex-end',
     flexDirection: 'row',
-    // flex: 1,
+    marginBottom: 15,
   },
 
-  roleInput: {
-    width: '53%',
+  nameWithoutIconContainer:{
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    alignItems: 'stretch',
+
+  },
+
+  nameFieldContainer:{
+    width:'48%',
+    alignItems:'stretch',
+  },
+
+  dateContainer:{
+    width: '100%',
+    height: 30,
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+
+  dateTextField:{
     height: 30,
     backgroundColor:'#fff',
-    color: 'red',
-    fontSize: 16,
-      
-    paddingLeft: 15,
+    color: colors.textDark,
+    width: '100%',
 
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#888888',
-  },
-
-  rolePicker: {
-    width: '53%',
-    // width: '100%',
-    height: 30,
-    backgroundColor:'#fff',
-    color: 'red',
-    fontSize: 12,
-      
-    paddingLeft: 15,
-
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#888888',
-
-  },
-
-  pickerItemStyle: {
-    // backgroundColor: 'red',
-    fontSize: 12,
-
-  },
-
-  genderInput: {
-    width: '43%',
-    height: 30,
-    backgroundColor:'#fff',
-    color: 'red',
-    fontSize: 16,
-      
-    paddingLeft: 15,
-
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#888888',
-
-  },
-
-  label: {
-    position:'absolute',
-    backgroundColor:'#fff',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
+    alignSelf:'flex-start',
+    
     fontSize: 14,
-  },
-  
-  dropdown: {
-    width: '53%',
-    height: 30,
-    borderColor: 'gray',
-    borderWidth: 1,
+    paddingLeft: 15,
+
     borderRadius: 15,
-    paddingHorizontal: 15,
+    borderWidth: 0,
+    borderColor: colors.textfieldBorder,
   },
-  
+
+
+  genderNRoleContainer:{
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    width:'100%',
+  },
+
+  roleContainer:{
+    width:'45%',
+    flexDirection: 'row',
+    alignItems:'stretch',
+  },
+
+  genderContainer:{
+    width:'55%',
+    paddingLeft: 20,
+    flexDirection: 'row',
+    alignItems:'stretch',
+  },
+
+  dropdown:{
+    flex: 1,
+    height: 30,
+    borderRadius: 15,
+    paddingLeft: 15,
+    justifyContent: 'center',
+    alignItems:'stretch',
+    backgroundColor: '#fff',
+  },
+
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#BDBDBD',
   },
   
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 14,
+
   },
 
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+  dropdownTextStyle:{
+    fontSize: 14,
   },
-})
+
+  buttonContainer: {
+    width: '100%',
+    alignItems:'stretch',
+    marginTop: 5,
+    flexDirection: 'column',
+    justifyContent:'flex-start',
+  },
+
+  signupButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+    width: '100%',
+    borderRadius: 15,
+    height: 40,
+    backgroundColor: 'hsl(216,0%,0%)',
+  },
+  
+  backContainer: {
+    marginTop: 15,
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+  
+  backDescriptionText: {
+    color: '#000',
+    fontSize: 14,
+    marginRight: 5,
+    fontWeight: '500',
+    marginRight: 15,
+    
+  },
+
+  signupButtonText:{
+    fontSize: 14,
+    fontWeight: '700',
+    alignSelf: 'center',
+    justifyContent:'center',
+    color: '#fff',
+  },
+
+
+  backButton: {
+    color: '#088AE8',
+    fontWeight: '800',
+  },
+  
+
+});
+
+
+

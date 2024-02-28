@@ -3,7 +3,7 @@ import React from 'react'
 import StylesGeneral from '../../styles/StylesGeneral'
 
 
-const FrontPage = ({ navigation }) => {
+export default FrontPage = ({ navigation }) => {
   return (
       <View style={StylesGeneral.container}>
         <Image 
@@ -45,7 +45,6 @@ const FrontPage = ({ navigation }) => {
     );
 };
 
-export default FrontPage;
     
 const styles = StyleSheet.create({
     logo: {
@@ -55,11 +54,9 @@ const styles = StyleSheet.create({
       borderRadius:1,
       borderColor:'red',
     },
-
     tagline: {
       textAlign: 'center',
       marginBottom: 50,
-      // color: 'grey',
       color: 'black',
       width: '60%',
     },
@@ -72,8 +69,6 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       fontWeight: '800',
       fontSize: 20,
-      
-      
     },
     input: {
       height: 50,
@@ -114,7 +109,6 @@ const styles = StyleSheet.create({
     },
     signupButton: {
       color: '#088AE8',
-      // fontSize: 16,
       fontWeight: '800',
 
     }

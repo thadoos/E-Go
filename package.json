@@ -27,7 +27,8 @@
     "react-native-element-dropdown": "^2.10.1",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "^3.29.0",
-    "undefined": "@expo/vector-icons/Ionicons"
+    "undefined": "@expo/vector-icons/Ionicons",
+    "expo-dev-client": "~3.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
-import FrontPage from './app/screens/FrontPage';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import FrontPage from './src/screens/FrontPage';
+import SignUp from './src/screens/SignUp';
 
-import SignUp from './app/screens/SignUp';
-
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -66,3 +69,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#DCE1DE',
   },
 });
+

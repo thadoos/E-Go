@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^6.3.25",
     "expo": "^50.0.1",
     "expo-asset": "~9.0.2",
+    "expo-build-properties": "^0.11.1",
     "expo-constants": "~15.4.5",
     "expo-dev-client": "~3.3.9",
     "expo-font": "~11.10.2",

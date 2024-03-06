@@ -50,21 +50,20 @@ const styles = StyleSheet.create({
   },
   loginText: {
     textAlign: "center",
-    marginBottom: 10,
+    marginBottom: 15,
     fontWeight: "800",
     fontSize: 20,
   },
-
   signupTextCont: {
     alignItems: "flex-end",
     justifyContent: "center",
-    paddingVertical: 16,
+    paddingVertical: 15,
     flexDirection: "row",
   },
   signupText: {
-    color: "#000",
     fontSize: 16,
-    marginRight: 5,
     fontWeight: "500",
+    color: "#000",
+    marginRight: 5,
   },
 });

@@ -207,7 +207,7 @@ export default SignUp = ({ navigation }) => {
               maxHeight={200}
               labelField="label"
               valueField="value"
-              placeholder={!roleFocus ? "Role" : "..."}
+              placeholder="Role" //{!roleFocus ? "Role" : "..."}
               value={user.role}
               onFocus={() => setRoleFocus(true)}
               onBlur={() => setRoleFocus(false)}
@@ -238,7 +238,7 @@ export default SignUp = ({ navigation }) => {
                 maxHeight={200}
                 labelField="label"
                 valueField="value"
-                placeholder={!genderFocus ? "Gender" : "..."}
+                placeholder="Gender" //{!genderFocus ? "Gender" : "..."}
                 value={user.gender}
                 onFocus={() => setGenderFocus(true)}
                 onBlur={() => setGenderFocus(false)}
@@ -447,7 +447,6 @@ const styles = StyleSheet.create({
   signupButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 15,
     width: "100%",
     borderRadius: 15,
     height: 40,
@@ -455,7 +454,7 @@ const styles = StyleSheet.create({
   },
 
   backContainer: {
-    marginTop: 15,
+    marginTop: 25,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -464,7 +463,6 @@ const styles = StyleSheet.create({
   backDescriptionText: {
     color: "#000",
     fontSize: 14,
-    marginRight: 5,
     fontWeight: "500",
     marginRight: 15,
   },

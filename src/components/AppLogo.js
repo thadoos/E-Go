@@ -6,7 +6,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const appLogoImage = require("../../assets/images/E-GO-Logo.png");
+const appLogoImage = require("../../assets/E-GO-Logo.png");
 
 export const AppLogo = () => {
   return (

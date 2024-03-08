@@ -267,7 +267,10 @@ export const SignUp = ({ navigation }) => {
             <Text style={styles.backButton}>Login</Text>
           </TouchableOpacity>
         </View>
+
       </View>
+
+
     </View>
   );
 };
@@ -479,4 +482,5 @@ const styles = StyleSheet.create({
     color: "#088AE8",
     fontWeight: "800",
   },
+
 });

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { AppLogo, DetailsEntry, SignButton } from "../components";
+import { AppLogo, DetailsEntry, SignButton, SignupIcon } from "../components";
 
 
 export const FrontPage = () => {
@@ -25,6 +25,17 @@ export const FrontPage = () => {
           navigationTarget={"Log In"}
         />
 
+        
+
+
+
+        <View style={styles.signupOptionContainer}>
+          <SignupIcon logoName="logo-google" color="black" />
+          <SignupIcon logoName="logo-linkedin" color = 'black'/>
+          <SignupIcon logoName="logo-facebook" color = 'black' />
+        </View>
+
+
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Don’t have an account?</Text>
           <SignButton
@@ -33,6 +44,7 @@ export const FrontPage = () => {
             navigationTarget={"Sign Up"}
           />
         </View>
+
       </View>
     </ScrollView>
   );
@@ -57,8 +69,9 @@ const styles = StyleSheet.create({
   signupTextCont: {
     alignItems: "flex-end",
     justifyContent: "center",
-    paddingVertical: 15,
+    // paddingVertical: 15,
     flexDirection: "row",
+    marginTop: 100,
   },
   signupText: {
     fontSize: 16,
@@ -66,4 +79,14 @@ const styles = StyleSheet.create({
     color: "#000",
     marginRight: 5,
   },
+
+  signupOptionContainer:{
+    width: '60%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 50,
+
+  },
+
+
 });

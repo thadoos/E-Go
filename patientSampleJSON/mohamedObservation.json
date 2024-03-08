@@ -1,0 +1,14 @@
+{
+  "resourceType": "observation",
+  "status": "final",
+  "code": {
+    "coding": [
+      {
+        "system": "http://loinc.rog",
+        "code": "15074-8",
+        "display": "Glucose [Moles/Volume] in Blood"
+      }
+    ]
+  }
+
+}

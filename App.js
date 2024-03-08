@@ -6,8 +6,14 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import FrontPage from './src/screens/FrontPage';
-import SignUp from './src/screens/SignUp';
+// import FrontPage from './src/screens/FrontPage';
+// import SignUp from './src/screens/SignUp';
+// import UserProfile from './src/screens/UserProfile';
+import {
+  FrontPage,
+  SignUp,
+  UserProfile,
+} from "./src/screens/"
 
 const Stack = createStackNavigator();
 
@@ -36,7 +42,7 @@ export default function App() {
 
         <Stack.Screen 
           name="Log In" 
-          component = { SignUp } // To be changed once the dashboard is done
+          component = { UserProfile } // To be changed once the dashboard is done
           options = {{
             headerStyle: {
               backgroundColor: '#DCE1DE',

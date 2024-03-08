@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { AppLogo, DetailsEntry, SignButton } from "../components";
 
 
-export default FrontPage = () => {
+export const FrontPage = () => {
   return (
     // Scrolling for smaller devices or for when keyboard is up
     <ScrollView

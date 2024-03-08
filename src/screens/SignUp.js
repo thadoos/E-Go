@@ -17,7 +17,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../firebaseConfig";
 
 
-export default SignUp = ({ navigation }) => {
+export const SignUp = ({ navigation }) => {
   const [user, setUser] = useState({
     avatar: null,
     firstName: "",

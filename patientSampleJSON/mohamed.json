@@ -1,0 +1,29 @@
+{
+	"resourceType": "Patient",
+	"name": [
+		{
+			"use": "official",
+			"given": ["Mohamed"],
+			"family": "Mohamed"
+		}
+	],
+	"gender": "male",
+	"birthDate": "1981-02-22",
+	"address": [
+		{
+			"line": [
+				"213, Mohamed Residency"	
+			],
+			"city": "London",
+			"state": "England",
+			"postalCode": "W918 ZHB1"
+		}
+	],
+	"telecom": [
+	{
+		"value": "9876543210",
+		"use": "mobile",
+		"system": "phone"
+	}
+	]
+}

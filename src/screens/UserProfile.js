@@ -14,10 +14,7 @@ export const UserProfile = () => {
       <Text style={styles.text}>Something </Text>
       <Text style={styles.text}>Something </Text>
 
-      {/* <View style={ styles.medicalInfoContainer }> */}
       <MedicalInformation patientID={ 39254 }/>
-      {/* </View> */}
-
 
     </View>
 

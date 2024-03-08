@@ -31,8 +31,6 @@ export const MedicalInformation = ({ patientID }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style= { styles.medicalInfoTitle }>Medical History</Text>
       <FlatList 
         data = { patientData }
         style = {styles.medicalList}
@@ -49,10 +47,6 @@ export const MedicalInformation = ({ patientID }) => {
         )}
 
       />
-
-
-
-    </View>
   )
 }
 

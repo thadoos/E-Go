@@ -30,20 +30,6 @@ export const UserProfile = () => {
   }
 
   return (
-    
-    // <View
-    //   style = {{
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    //   }}
-    // >
-    //   <Text>
-    //     { patientData.name[0].family }
-    //     { patientData.gender}
-    //     { patientData.address[0].line}
-    //     </Text>
-    // </View>
     <View style={styles.container}>
       <Text style={{marginTop:200}}>Hello There </Text>
 
@@ -53,9 +39,9 @@ export const UserProfile = () => {
         keyExtractor={(item, index) => item.resource?.id || String(index)}
         renderItem={({ item }) => (
           <View style = {styles.recordView}>
-            <Text style={styles.recordTitle}>Condition: {item.resource.coding[0].code.display}</Text>
-            <Text>Recorded Date: {item.onsetDateTime}</Text>
-            <Text>Status: {item.clinicalStatus.coding[0].display}</Text>
+            <Text style={styles.recordTitle}>Condition: {item.entry.resource.code}</Text>
+            <Text>Recorded Date: {item.entry.onsetDateTime}</Text>
+            <Text>Status: {item.entry.resource.clinicalStatus.coding[0].display}</Text>
           </View>
         )}
       />

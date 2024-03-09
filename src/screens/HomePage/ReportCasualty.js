@@ -66,7 +66,7 @@ export const ReportCasualty = () => {
       </View>
 
       <View style={{marginBottom: 30}}>
-      <MultiLineDetailsEntry titleText={"Description of incident: "} lineNumber={3} text={description} setText={setDescription} />
+      <MultiLineDetailsEntry titleText={"Description of Incident: "} lineNumber={3} text={description} setText={setDescription} />
       <MultiLineDetailsEntry titleText={"Symptoms: "} lineNumber={3} text={symptoms} setText={setSymptoms} />
       <MultiLineDetailsEntry titleText={"Location: "} lineNumber={1} text={location} setText={setLocation} />
       

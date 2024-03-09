@@ -1,63 +1,14 @@
-import { View, Text, ActivityIndicator, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { fetchPatientData } from '../../routers/fhirRequest';
+import { View } from 'react-native'
 import { StyleSheet } from 'react-native-web';
+import { MedicalBottomSheet } from '../../components/Medical';
 
 export const ViewCases = () => {
-  const [patientData, setPatientData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  /*
-  sign out function:
-  const navigation = useNavigation();
-  const handleSignOut = () => {
-      auth
-          .signOut()
-          .then(() => {
-              console.log('User signed out!');
-              navigation.navigate('Login');
-          })
-          .catch(error => alert(error.message));
-  }
-  */
-
-  useEffect(() => {
-    const fetchPatientRecords = async () => {
-      try {
-        await fetchPatientData(39254)
-          .then(data => {
-            setPatientData(data.entry)
-          })
-      } catch (error) {
-        console.error("Failed to fetch patient data: ", error);
-      } finally {
-        setIsLoading(false);
-        console.log(patientData);
-      }
-    }
-    fetchPatientRecords();
-  }, []);
-
-
-  if (isLoading) {
-    return <ActivityIndicator style={{ alignSelf: "center", justifyContent: "center" }} />;
-  }
-
+  const patientID = "39254" // This should be somehow set to the casualty's patientID
   return (
     <View style={styles.container}>
-      <Text style={{ marginTop: 200 }}>Hello There </Text>
+      {/* Map Goes Here */}
 
-      <FlatList
-        data={patientData}
-        keyExtractor={(item, index) => item.resource?.id || String(index)}
-        renderItem={({ item }) => (
-          <View style={styles.recordView}>
-            <Text style={styles.recordTitle}>Condition: {item.entry?.resource?.code}</Text>
-            <Text>Recorded Date: {item.entry?.onsetDateTime}</Text>
-            <Text>Status: {item.entry?.resource?.clinicalStatus?.coding[0]?.display}</Text>
-          </View>
-        )}
-      />
+      <MedicalBottomSheet patientID = {patientID}/>
 
     </View>
   )
@@ -69,29 +20,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#DCE1DE",
     alignItems: "center",
   },
-
-  detailsContainer: {
-    width: "75%",
-    backgroundColor: 'green',
-
-  },
-
-  medicalHistoryList: {
-    marginTop: 50,
-    backgroundColor: 'black',
-
-  },
-
-  recordView: {
-    backgroundColor: 'red',
-    padding: 20,
-    margniTop: 50,
-  },
-
-  recordTitle: {
-    fontSize: 16,
-  },
-
-
-
 })

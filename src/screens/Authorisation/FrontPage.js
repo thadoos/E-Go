@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
-import { AppLogo, DetailsEntry, SignButton } from "../../components";
+import { AppLogo, DetailsEntry, SignupIcon } from "../../components";
 import { useState } from "react";
 import { handleLogin } from '../../components/AuthHandlers';
 import { useNavigation } from "@react-navigation/native";
@@ -46,14 +46,21 @@ export const FrontPage = () => {
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
+            autoCapitalize="none"
           />
         </View>
 
         <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => handleLogin({email, password, navigation})}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
+          style={styles.buttonContainer}
+          onPress={() => handleLogin({email, password, navigation})}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+
+        <View style={styles.signupOptionContainer}>
+          <SignupIcon logoName="logo-google" color="black" />
+          <SignupIcon logoName="logo-linkedin" color = 'black'/>
+          <SignupIcon logoName="logo-facebook" color = 'black' />
+        </View>
 
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Don’t have an account?</Text>
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
   signupTextCont: {
     alignItems: "flex-end",
     justifyContent: "center",
-    paddingVertical: 15,
+    marginTop: 100,
     flexDirection: "row",
   },
   signupText: {
@@ -114,5 +121,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     color: '#088AE8',
-  }
+  },
+  signupOptionContainer:{
+    width: '60%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 50,
+
+  },
 });

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { MedicalBottomSheet } from "../../components/Medical";
 import { getDatabase, ref, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 const userProfileImage = require("../../../assets/userprofile.jpeg");
 
 export const ViewProfile = () => {
   const [userData, setUserData] = useState({});
+  const patientID = "39254" // change this so it retrieves to FHIR data from Firebase of this user
 
   const fetchUserData = async () => {
     const db = getDatabase();
@@ -27,22 +29,26 @@ export const ViewProfile = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }
+  , []);
 
   return (
+    <View style={styles.container}>
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={userProfileImage} style={styles.profileImage} />
       <Text style={styles.username}>{userData.firstName} {userData.lastName}</Text>
       <View style={styles.infoContainer}>
         <InfoRow
           title="Address:"
-          value= {userData.address}
+          value={userData.address}
         />
         <InfoRow title="Birthday:" value="0000/20/203" />
-        <InfoRow title="Gender:" value= {userData.gender} />
+        <InfoRow title="Gender:" value={userData.gender} />
         <InfoRow title="Phone No.:" value="Example phone number" />
       </View>
     </ScrollView>
+    <MedicalBottomSheet patientID={patientID} />
+  </View>
   );
 };
 
@@ -62,6 +68,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
   },
+  subContainer: {
+    flexGrow: 1,
+    height: "10%",
+    flex: 1,
+    backgroundColor: "#DCE1DE",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+
   username: {
     fontSize: 30,
     fontWeight: "bold",

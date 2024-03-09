@@ -1,20 +1,34 @@
 import { View, Text, ActivityIndicator, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { fetchPatientData } from '../routers/fhirRequest';
+import { fetchPatientData } from '../../routers/fhirRequest';
 import { StyleSheet } from 'react-native-web';
 
-export const UserProfile = () => {
+export const ViewCases = () => {
   const [patientData, setPatientData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  /*
+  sign out function:
+  const navigation = useNavigation();
+  const handleSignOut = () => {
+      auth
+          .signOut()
+          .then(() => {
+              console.log('User signed out!');
+              navigation.navigate('Login');
+          })
+          .catch(error => alert(error.message));
+  }
+  */
 
   useEffect(() => {
     const fetchPatientRecords = async () => {
       try {
         await fetchPatientData(39254)
-        .then(data => {
-          setPatientData(data.entry)
-        })
-      } catch(error) {
+          .then(data => {
+            setPatientData(data.entry)
+          })
+      } catch (error) {
         console.error("Failed to fetch patient data: ", error);
       } finally {
         setIsLoading(false);
@@ -23,25 +37,24 @@ export const UserProfile = () => {
     }
     fetchPatientRecords();
   }, []);
-  
+
 
   if (isLoading) {
-    return <ActivityIndicator style = {{alignSelf: "center", justifyContent: "center"}}/>;
+    return <ActivityIndicator style={{ alignSelf: "center", justifyContent: "center" }} />;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={{marginTop:200}}>Hello There </Text>
+      <Text style={{ marginTop: 200 }}>Hello There </Text>
 
-      <FlatList 
-        // style={styles.medicalHistoryList}
-        data = { patientData }
+      <FlatList
+        data={patientData}
         keyExtractor={(item, index) => item.resource?.id || String(index)}
         renderItem={({ item }) => (
-          <View style = {styles.recordView}>
-            <Text style={styles.recordTitle}>Condition: {item.entry.resource.code}</Text>
-            <Text>Recorded Date: {item.entry.onsetDateTime}</Text>
-            <Text>Status: {item.entry.resource.clinicalStatus.coding[0].display}</Text>
+          <View style={styles.recordView}>
+            <Text style={styles.recordTitle}>Condition: {item.entry?.resource?.code}</Text>
+            <Text>Recorded Date: {item.entry?.onsetDateTime}</Text>
+            <Text>Status: {item.entry?.resource?.clinicalStatus?.coding[0]?.display}</Text>
           </View>
         )}
       />
@@ -63,13 +76,13 @@ const styles = StyleSheet.create({
 
   },
 
-  medicalHistoryList:{
-    marginTop : 50,
+  medicalHistoryList: {
+    marginTop: 50,
     backgroundColor: 'black',
 
   },
 
-  recordView:{
+  recordView: {
     backgroundColor: 'red',
     padding: 20,
     margniTop: 50,
@@ -79,6 +92,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  
+
 
 })

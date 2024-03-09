@@ -1,61 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-// import FrontPage from './src/screens/FrontPage';
-// import SignUp from './src/screens/SignUp';
-// import UserProfile from './src/screens/UserProfile';
-import {
-  FrontPage,
-  SignUp,
-  UserProfile,
-} from "./src/screens/"
+import { AuthNavigation } from './src/navigation';
 
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown:false}} 
-      >
-        <Stack.Screen 
-          name="Login" 
-          component = { FrontPage } 
-          options = {{ headerShown:false}}
-        />
-
-        <Stack.Screen 
-          name="Sign Up" 
-          component = { SignUp } 
-          options = {{
-            headerStyle: {
-              backgroundColor: '#DCE1DE',
-
-            },
-          }}
-        />
-
-        <Stack.Screen 
-          name="Log In" 
-          component = { UserProfile } // To be changed once the dashboard is done
-          options = {{
-            headerStyle: {
-              backgroundColor: '#DCE1DE',
-            },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-
-    // <View style={styles.container}>
-    //   <DropdownComponent />
-    // </View>
-  );
+    <AuthNavigation/>
+  )
 }
 
 const styles = StyleSheet.create({

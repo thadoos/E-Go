@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { AppLogo, DetailsEntry, SignButton } from "../components";
+import { AppLogo, DetailsEntry, SignButton } from "../../components";
+import { useState } from "react";
 
 
 export const FrontPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     // Scrolling for smaller devices or for when keyboard is up
     <ScrollView
@@ -14,15 +18,15 @@ export const FrontPage = () => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.loginText}>Login</Text>
-          <DetailsEntry fieldName={"Email"} keyboardType={"email-address"} />
-          <DetailsEntry fieldName={"Password"} secureTextEntry={true} />
+          <DetailsEntry fieldName={"Email"} keyboardType={"email-address"} onChangeText={setEmail}/>
+          <DetailsEntry fieldName={"Password"} secureTextEntry={true} onChangeText={setPassword} />
         </View>
 
         <SignButton
           text={"Sign In"}
           borderStyle={"buttonContainer"}
           textStyle={"buttonText"}
-          navigationTarget={"Log In"}
+          navigationTarget={"Home Page"}
         />
 
         <View style={styles.signupTextCont}>

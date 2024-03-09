@@ -2,12 +2,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
-export const SignButton = ({text, borderStyle, textStyle, navigationTarget}) => {
+export const SignButton = ({text, borderStyle, textStyle, navigationTarget, onButtonPress}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles[`${borderStyle}`]} 
       onPress={() => {
-     //   onButtonPress();
+        //onButtonPress();
         navigation.navigate(navigationTarget);}}>
       <Text style={styles[`${textStyle}`]}>{text}</Text>
     </TouchableOpacity>

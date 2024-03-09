@@ -11,10 +11,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import DatePicker from "react-native-date-picker";
 
-import { colors } from "../styles/colors";
-import { auth } from "../firebaseConfig";
+import { colors } from "../../styles/colors";
+import { auth } from "../../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseConfig from "../firebaseConfig";
+import firebaseConfig from "../../firebaseConfig";
 
 
 export const SignUp = ({ navigation }) => {

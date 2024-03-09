@@ -4,16 +4,21 @@ import { useState } from "react";
 export const DetailsEntry = ({fieldName, keyboardType = "default", secureTextEntry = false, onChangeText}) => {
   const [textEntry, setTextEntry] = useState('');
 
+  const handleTextChange = (text) => {
+    setTextEntry(text);
+    onChangeText(text);
+  };
+
   return (
     <TextInput
       //TextInput Details
       placeholder={fieldName}
-      style={styles.input}and
+      style={styles.input}
       keyboardType= {keyboardType}
       secureTextEntry = {secureTextEntry}
 
       //Backend
-      onChangeText={setTextEntry} 
+      onChangeText={handleTextChange} 
       value={textEntry}
     />
   );

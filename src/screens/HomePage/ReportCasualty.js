@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import {useState} from 'react'
 import { SignButton, MultiLineDetailsEntry } from '../../components'
 import { getDatabase, ref, set, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 export const ReportCasualty = () => {
   const [description, setDescription] = useState("");
@@ -14,14 +15,21 @@ export const ReportCasualty = () => {
     const db = getDatabase();
 
     // Create a new entry in the "casualties" collection
+    const [lat, long] = location.replace(/[^0-9., -]/g, '').split(/[ ,]+/);
     const casultyRef = ref(db, 'casualties/');
     const newCasualtyRef = push(casultyRef);
+    const auth = getAuth();
+    const reporterID = auth.currentUser.uid;
 
     // Set the values of the new entry
     set(newCasualtyRef, {
       description: description,
       symptoms: symptoms,
-      location: location,
+      location: {
+        lat: lat,
+        long: long
+      },
+      userid: reporterID
     })
       .then(() => {
         alert('Report submitted successfully');
@@ -36,7 +44,7 @@ export const ReportCasualty = () => {
   };
 
   // Call the submitReport function when the Submit button is pressed
-  // create a new button
+  // create a new button - below is the supposed button code but didn't work (function not called) - declan. (stored a copy of it in case resolved asap)
   <SignButton text="Submit" borderStyle="buttonContainer" textStyle="buttonText" navigationTarget="Home Page" onPress={submitReport} />
 
   return (

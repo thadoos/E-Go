@@ -13,6 +13,7 @@
     "@firebase/auth": "^1.6.1",
     "@gorhom/bottom-sheet": "^4.6.1",
     "@react-native-async-storage/async-storage": "^1.22.3",
+    "@react-native-community/blur": "^4.4.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^19.0.0",
     "@react-native-firebase/auth": "^19.0.0",
@@ -25,6 +26,7 @@
     "expo-constants": "~15.4.5",
     "expo-dev-client": "~3.3.9",
     "expo-font": "~11.10.2",
+    "expo-image-picker": "~14.7.1",
     "expo-linking": "~6.2.2",
     "expo-splash-screen": "~0.26.3",
     "expo-status-bar": "~1.11.1",
@@ -42,7 +44,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "rn-sliding-up-panel": "^2.4.6",
-    "expo-image-picker": "~14.7.1"
+    "expo-blur": "~12.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

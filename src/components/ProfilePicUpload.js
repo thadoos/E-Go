@@ -3,14 +3,14 @@ import React from 'react'
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../styles/colors";
 
-export const ProfilePicUpload = ({image,setShowModal}) => {
+export const ProfilePicUpload = ({image, showModal, setShowModal}) => {
   
 
   return (
     <TouchableOpacity 
       style={styles.avatarPlaceholder}
       onPress={() => {
-        setShowModal(true);
+        setShowModal(!showModal);
       }}  
     >
       
@@ -28,7 +28,7 @@ export const ProfilePicUpload = ({image,setShowModal}) => {
 const styles = StyleSheet.create({
   avatarPlaceholder: {
     width: 200,
-    height: 200,
+    aspectRatio: 1,
     borderRadius: 100,
     borderColor: colors.placeholderText,
     borderWidth: 0.5,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   avatar: {
     position: "absolute",
     width: 200,
-    height: 200,
+    aspectRatio: 1,
     borderRadius: 100,
   },
 

@@ -6,3 +6,6 @@ export { MedicalInformation } from './MedicalInformation'
 export { SignUpDetailEntry } from "./SignUpDetailEntry";
 export { UploadPictureModal } from './UploadPictureModal'
 export { ProfilePicUpload } from './ProfilePicUpload'
+export { NameEntry } from './NameEntry'
+export { RoleGenderEntry } from './RoleGenderEntry'
+export { DateEntry } from './DateEntry'

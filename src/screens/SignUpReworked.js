@@ -11,7 +11,7 @@ import { colors } from "../styles/colors";
 import { auth } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../firebaseConfig";
-import { SignUpDetailEntry, UploadPictureModal, ProfilePicUpload } from "../components/";
+import { DateEntry, SignUpDetailEntry, UploadPictureModal, ProfilePicUpload, NameEntry, RoleGenderEntry } from "../components/";
 
 
 export const SignUpReworked = ({ navigation }) => {
@@ -37,15 +37,29 @@ export const SignUpReworked = ({ navigation }) => {
 
   const [showModal, setShowModal] = useState(false);
 
+  function onSignUpPress()  {
+    console.log(user);
+    createUserWithEmailAndPassword(auth,user.email, user.password)
+      .then(() => {
+        console.log("success");
+        console.log(user.name);
+      }).catch(() => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      })
+      ;
+  };
+
   return (
     <View style={styles.container}>
       
+      <Text style={styles.signupText}>Sign Up</Text>
       
-      <ProfilePicUpload image={user.avatar} setShowModal={setShowModal}/>
+      <ProfilePicUpload image={user.avatar} showModal={showModal} setShowModal={setShowModal}/>
 
       <View style={styles.inputContainer}>
 
-        <Text style={styles.signupText}>Sign Up</Text>
+        <NameEntry updateUserDetails={updateUserDetails}/>
 
         <SignUpDetailEntry 
           value={user.email}
@@ -78,10 +92,29 @@ export const SignUpReworked = ({ navigation }) => {
           placeholder="Address"
           updateUserDetails={updateUserDetails}
         />
+        {/* <DateEntry updateUserDetails={updateUserDetails} user={user}/> */}
+        <RoleGenderEntry user={user} updateUserDetails={updateUserDetails}/>
 
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress = {(onSignUpPress)}
+            style={styles.signupButton}>
+            <Text style={styles.signupButtonText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.backContainer}>
+          <Text style={styles.backDescriptionText}>Back to Login?</Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.backButton}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+
+
         
-      {showModal && <UploadPictureModal updateUserDetails={updateUserDetails} setShowModal={setShowModal}/>}
+      {showModal && <UploadPictureModal showModal={showModal} updateUserDetails={updateUserDetails} setShowModal={setShowModal}/>}
+    
     </View>
 
   );
@@ -110,6 +143,51 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: "800",
     fontSize: 25,
+  },
+
+  buttonContainer: {
+    width: "100%",
+    alignItems: "stretch",
+    marginTop: 5,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  },
+
+  signupButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    borderRadius: 15,
+    height: 40,
+    backgroundColor: "hsl(216,0%,0%)",
+    marginTop: 25,
+  },
+
+  backContainer: {
+    marginTop: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  backDescriptionText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "500",
+    marginRight: 15,
+  },
+
+  signupButtonText: {
+    fontSize: 14,
+    fontWeight: "700",
+    alignSelf: "center",
+    justifyContent: "center",
+    color: "#fff",
+  },
+
+  backButton: {
+    color: "#088AE8",
+    fontWeight: "800",
   },
 
   

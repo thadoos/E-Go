@@ -1,22 +1,36 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker"
+// import { BlurView } from '@react-native-community/blur';
+import { BlurView } from 'expo-blur';
 
-export const UploadPictureModal = ({updateUserDetails, setShowModal}) => {
+export const UploadPictureModal = ({updateUserDetails, showModal, setShowModal}) => {
 
-  const uploadImage = async() => {
+  const uploadImage = async(mode) => {
     try {
-      await ImagePicker.
-      requestCameraPermissionsAsync();
-      let result = await ImagePicker.
-      launchCameraAsync({
-        // camera: 'front',
-        cameraType: ImagePicker.CameraType.front,
-        allowsEditing: true,
-        aspect: [1,1],
-        quality: 1,
-      });
+      result = {};
+      if (mode === "gallery"){
+        await ImagePicker.
+        requestMediaLibraryPermissionsAsync();
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1,1],
+          quality: 1,
+        });
+      } else{
+        await ImagePicker.
+        requestCameraPermissionsAsync();
+        result = await ImagePicker.
+        launchCameraAsync({
+          cameraType: ImagePicker.CameraType.front,
+          allowsEditing: true,
+          aspect: [1,1],
+          quality: 1,
+        });
+  
+      }
       if(!result.canceled) {
         await saveImage(result.assets[0].uri);
       }
@@ -25,15 +39,15 @@ export const UploadPictureModal = ({updateUserDetails, setShowModal}) => {
     }catch(error){
       alert(error);
       setShowModal(false);
-    }
+    } 
   }
   
 
   const saveImage = async(image) => {
     try {
-      // setImage(image);
       setShowModal(false);
       updateUserDetails("avatar", image);
+      // sendToBackend();
       
     } catch(error) {
       throw error;
@@ -41,39 +55,54 @@ export const UploadPictureModal = ({updateUserDetails, setShowModal}) => {
   }
 
   return (
-    <View style={styles.modalOverallContainer}>
-      <View style={styles.modalContainer}>
-        <Text style={styles.modalHeader}>Upload Profile Picture</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Ionicons
-              name="camera"
-              size={20}
-              color="#000000"
-              onPress={uploadImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Ionicons
-              name="image"
-              size={20}
-              color="#000000"
-              onPress={uploadImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Ionicons
-              name="remove-circle"
-              size={20}
-              color="#000000"
-            />
-          </TouchableOpacity>
+      <BlurView
+        style={styles.modalOverallContainer}
+        blurType="light"
+        blurAmount={10}
+        reducedTransparencyFallbackColor="white"
+      >
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalHeader}>Upload Profile Picture</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+              style={styles.buttonTouchable} 
+              onPress={() => uploadImage()}
+            >
+              <Ionicons
+                name="camera"
+                size={40}
+                color="#fff"
+                
+              />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.buttonTouchable} 
+              onPress={() => uploadImage("gallery")}
+            >
+              <Ionicons
+                name="image"
+                size={40}
+                color="#fff"
+                
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonTouchable} 
+              onPress={() => setShowModal(false)}
+            >
+              <Ionicons
+                name="close-circle"
+                size={40}
+                color="#fff"
+                
+              />
+            </TouchableOpacity>
+
+          </View>
 
         </View>
-
-      </View>
-
-    </View>
+      </BlurView>
+    // </View>
     
   )
 }
@@ -90,20 +119,32 @@ const styles = StyleSheet.create({
     bottom: 0,
 
   },
+  absolute:{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   modalContainer:{
     width: '70%',
-    aspectRatio: 2.5,
+    aspectRatio: 2,
     alignItems: 'center',
     alignSelf:'center',
-    backgroundColor: 'white',
+    backgroundColor: '#333333',
     paddingTop: 15,
     borderRadius: 25,
     zIndex: 1,
+    // borderColor: '#AAAAAA',
+    // borderWidth: 0.5,
   },
   modalHeader:{
-    fontWeight: '600',
-    fontSize: 15,
+    fontWeight: '800',
+    fontSize: 20,
+    color:'#fff',
   },
 
   
@@ -111,18 +152,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
     alignSelf:'center',
   },
 
   buttonTouchable:{
-    // width: '80%',
-    // aspectRatio: 1,
-
-
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: '10%',
   },
 
 

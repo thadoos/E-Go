@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
 function validateInput(user){
-    return user.firstName !== "" && user.lastName !== "" && user.address !== "" && user.gender !== "" && user.role !== "" && user.dob != null;
+    return user.firstName !== "" && user.lastName !== "" && user.address !== "" && user.gender !== "" && user.role !== "";
 }
 
 export function handleSignUp({user, navigation}){

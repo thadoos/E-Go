@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { MedicalBottomSheet } from "../../components/Medical";
+import { getDatabase, ref, get } from "firebase/database";
 
 const userProfileImage = require("../../../assets/userprofile.jpeg");
 

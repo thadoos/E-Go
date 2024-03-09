@@ -4,6 +4,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import firebase from "firebase/compat/app";
+import { getDatabase } from "firebase/database"; 
 import "firebase/compat/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -13,6 +14,7 @@ import "firebase/compat/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyA8ha0vvuVKNW0uZkcSs-Ut7Vq_1HzgOTQ",
   authDomain: "e-go-9daa0.firebaseapp.com",
+  databaseURL: "https://e-go-9daa0-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "e-go-9daa0",
   storageBucket: "e-go-9daa0.appspot.com",
   messagingSenderId: "156758455805",
@@ -31,3 +33,4 @@ if (firebase.apps.length === 0) {
 const auth = firebase.auth();
 
 export { auth };
+

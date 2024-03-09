@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { AuthNavigation } from './src/navigation';
 
-
 export default function App() {
   return (
     <AuthNavigation/>

@@ -65,7 +65,12 @@ export const SignUp = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.signupText}>Sign Up</Text>
 
-      <TouchableOpacity style={styles.avatarPlaceholder}>
+      <TouchableOpacity 
+        style={styles.avatarPlaceholder}
+        onPress={() => {
+          setModalVisible(true);
+        }}  
+      >
         <Image source={{ uri: user.avatar }} style={styles.avatar} />
         <Ionicons name="add" size={40} color={"#000000"}></Ionicons>
       </TouchableOpacity>

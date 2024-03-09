@@ -19,12 +19,15 @@ export const UserProfile = () => {
       <BottomSheet 
         index={0} 
         snapPoints={snapPoints}
-        backgroundStyle={{ backgroundColor: '#FF6969'}}
+        backgroundStyle={{ backgroundColor: '#ADB2AF'}} //FF6969 ADB2AF
         handleIndicatorStyle={{backgroundColor:'#FFF'}}
         
       >
         <Text style={styles.medicalInfoTitle}>Medical Details</Text>
-        <MedicalInformation patientID={ 39254 }/>
+        <View style = {styles.medicalInfoContainer}>
+          <MedicalInformation patientID={ 39254 }/>
+
+        </View>
         
       </BottomSheet>
       
@@ -54,15 +57,12 @@ const styles = StyleSheet.create({
     marginBottom:50,
   },
 
-  medicalInfoContainer: {
-    flex: 1,
-    backgroundColor: "#FF6969",
-    // backgroundColor: "#FFD8CC",
-    // backgroundColor: "#F39F5A",
-    alignItems: "center",
+  medicalInfoContainer:{
     width: '100%',
-    borderTopStartRadius: 55,
-    borderTopEndRadius: 55,
+    backgroundColor: '#DCE1DE',
+    // borderColor: 'red',
+    // borderWidth: 1,
+
   },
 
 
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black',
     alignSelf: 'center',
+    paddingBottom: 20,
   },
 
 })

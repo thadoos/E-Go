@@ -13,6 +13,7 @@ import {
   FrontPage,
   SignUp,
   UserProfile,
+  SignUpReworked,
 } from "./src/screens/"
 
 const Stack = createStackNavigator();
@@ -31,7 +32,7 @@ export default function App() {
 
         <Stack.Screen 
           name="Sign Up" 
-          component = { SignUp } 
+          component = { SignUpReworked } 
           options = {{
             headerStyle: {
               backgroundColor: '#DCE1DE',

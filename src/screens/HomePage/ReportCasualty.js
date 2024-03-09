@@ -11,6 +11,11 @@ export const ReportCasualty = () => {
   const [location, setLocation] = useState("");
 
   const submitReport = () => {
+    if (!description || !symptoms || !location) {
+      alert('All fields must be filled out');
+      return;
+    }
+    
     // Get a reference to the Firebase database
     const db = getDatabase();
 

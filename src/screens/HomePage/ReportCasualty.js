@@ -20,6 +20,8 @@ export const ReportCasualty = () => {
     const db = getDatabase();
 
     // Create a new entry in the "casualties" collection
+
+    // Split the location string into latitude and longitude
     const [lat, long] = location.replace(/[^0-9., -]/g, '').split(/[ ,]+/);
     const casultyRef = ref(db, 'casualties/');
     const newCasualtyRef = push(casultyRef);

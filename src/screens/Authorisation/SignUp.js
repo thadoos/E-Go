@@ -22,7 +22,7 @@ export const SignUp = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: null,
+    phone: "",
     password: "",
     address: "",
     role: "",

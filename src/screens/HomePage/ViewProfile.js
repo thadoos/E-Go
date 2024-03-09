@@ -42,9 +42,10 @@ export const ViewProfile = () => {
           title="Address:"
           value={userData.address}
         />
-        <InfoRow title="Birthday:" value="0000/20/203" />
+        <InfoRow title="Role:" value={userData.role} />
+        <InfoRow title="Phone No.:" value={userData.phone} />
         <InfoRow title="Gender:" value={userData.gender} />
-        <InfoRow title="Phone No.:" value="Example phone number" />
+        
       </View>
     </ScrollView>
     <MedicalBottomSheet patientID={patientID} />

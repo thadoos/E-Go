@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getDatabase, ref, set } from "firebase/database";
 
 function validateInput(user){
-    return user.firstName !== "" && user.lastName !== "" && user.address !== "" && user.gender !== "" && user.role !== "";
+    return user.firstName !== "" && user.lastName !== "" && user.address !== "" && user.gender !== "" && user.role !== "" && user.email !== "" && user.password !== "" && user.phone !== "" && user.fhirID !== "";
 }
 
 export function handleSignUp({user, navigation}){
@@ -23,7 +23,9 @@ export function handleSignUp({user, navigation}){
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            phone: user.phone,
             address: user.address,
+            fhirid: user.fhirID,
             role: user.role,
             gender: user.gender
         });

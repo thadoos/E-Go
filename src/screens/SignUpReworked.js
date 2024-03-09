@@ -92,7 +92,7 @@ export const SignUpReworked = ({ navigation }) => {
           placeholder="Address"
           updateUserDetails={updateUserDetails}
         />
-        {/* <DateEntry updateUserDetails={updateUserDetails} user={user}/> */}
+        <DateEntry updateUserDetails={updateUserDetails} user={user}/>
         <RoleGenderEntry user={user} updateUserDetails={updateUserDetails}/>
 
         <View style={styles.buttonContainer}>

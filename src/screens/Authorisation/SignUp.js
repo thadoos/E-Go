@@ -13,11 +13,11 @@ import DatePicker from "react-native-date-picker";
 
 import { colors } from "../../styles/colors";
 import { auth } from "../../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../../firebaseConfig";
-
-
-export const SignUp = ({ navigation }) => {
+import { useNavigation } from "@react-navigation/native";
+import { handleSignUp } from "../../components/AuthHandlers";
+export const SignUp = () => {
   const [user, setUser] = useState({
     avatar: null,
     firstName: "",
@@ -47,19 +47,8 @@ export const SignUp = ({ navigation }) => {
     { label: "Other", value: "Other" },
   ];
 
+  const navigation = useNavigation();
 
-  //Buttonfunctions:
-  function onSignUpPress()  {
-    createUserWithEmailAndPassword(auth,user.email, user.password)
-      .then(() => {
-        console.log("success");
-        console.log(user.name);
-      }).catch(() => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      })
-      ;
-  };
 
   return (
     <View style={styles.container}>
@@ -255,7 +244,7 @@ export const SignUp = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress = {(onSignUpPress)}
+          <TouchableOpacity onPress = {() => handleSignUp({user, navigation})}
             style={styles.signupButton}>
             <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>

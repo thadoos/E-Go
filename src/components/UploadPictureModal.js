@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker"
-// import { BlurView } from '@react-native-community/blur';
 import { BlurView } from 'expo-blur';
 
 export const UploadPictureModal = ({updateUserDetails, showModal, setShowModal}) => {

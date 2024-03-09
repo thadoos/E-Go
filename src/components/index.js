@@ -1,11 +1,13 @@
 export { AppLogo } from './AppLogo';
-export { DetailsEntry } from './DetailsEntry';
+export { DetailsEntry } from './UserEntryFields/DetailsEntry';
 export { SignButton } from './SignButton';
 export { SignupIcon } from './SignupIcon';
-export { MedicalInformation } from './MedicalInformation'
-export { SignUpDetailEntry } from "./SignUpDetailEntry";
+
+export { SignUpDetailEntry } from "./UserEntryFields/SignUpDetailEntry";
 export { UploadPictureModal } from './UploadPictureModal'
-export { ProfilePicUpload } from './ProfilePicUpload'
-export { NameEntry } from './NameEntry'
-export { RoleGenderEntry } from './RoleGenderEntry'
-export { DateEntry } from './DateEntry'
+export { ProfilePicUpload } from './UserEntryFields/ProfilePicUpload'
+export { NameEntry } from './UserEntryFields/NameEntry'
+export { RoleGenderEntry } from './UserEntryFields/RoleGenderEntry'
+export { DateEntry } from './UserEntryFields/DateEntry'
+export {MultiLineDetailsEntry} from './UserEntryFields/MultiLineDetailsEntry';
+export {Map} from './Map';

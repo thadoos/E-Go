@@ -7,14 +7,16 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
-import { colors } from "../styles/colors";
-import { auth } from "../firebaseConfig";
+import { colors } from "../../styles/colors";
+import { auth } from "../../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseConfig from "../firebaseConfig";
-import { DateEntry, SignUpDetailEntry, UploadPictureModal, ProfilePicUpload, NameEntry, RoleGenderEntry } from "../components/";
+import firebaseConfig from "../../firebaseConfig";
+import { DateEntry, SignUpDetailEntry, UploadPictureModal, ProfilePicUpload, NameEntry, RoleGenderEntry } from "../../components/UserEntryFields";
+import { useNavigation } from "@react-navigation/native";
+import { handleSignUp } from "../../components/AuthHandlers";
 
 
-export const SignUpReworked = ({ navigation }) => {
+export const SignUp = () => {
   const [user, setUser] = useState({
     avatar: null,
     firstName: "",
@@ -25,8 +27,11 @@ export const SignUpReworked = ({ navigation }) => {
     address: "",
     role: "",
     gender: "",
+    fhirID: "",
     dob: null,
   });
+
+  const navigation = useNavigation();
 
   const updateUserDetails = (fieldName, value) => {
     setUser(prevState => ({
@@ -92,11 +97,18 @@ export const SignUpReworked = ({ navigation }) => {
           placeholder="Address"
           updateUserDetails={updateUserDetails}
         />
-        <DateEntry updateUserDetails={updateUserDetails} user={user}/>
+        <SignUpDetailEntry 
+          value={user.fhirID}
+          fieldName="fhirID"
+          ioniconName="map"
+          placeholder="FHIR ID"
+          updateUserDetails={updateUserDetails}
+        />
+        {/* <DateEntry updateUserDetails={updateUserDetails} user={user}/> */}
         <RoleGenderEntry user={user} updateUserDetails={updateUserDetails}/>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress = {(onSignUpPress)}
+          <TouchableOpacity onPress = {() => handleSignUp({user, navigation})}
             style={styles.signupButton}>
             <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>

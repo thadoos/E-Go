@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React from 'react'
 import { Ionicons } from "@expo/vector-icons";
-import { colors } from "../styles/colors";
+import { colors } from "../../styles/colors";
 
 
 export const SignUpDetailEntry = ({

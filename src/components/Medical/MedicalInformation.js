@@ -1,6 +1,6 @@
 import { View, Text, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { fetchPatientData } from '../routers/fhirRequest';
+import { fetchPatientData } from '../../routers/fhirRequest';
 
 
 export const MedicalInformation = ({ patientID }) => {
@@ -9,7 +9,7 @@ export const MedicalInformation = ({ patientID }) => {
 
   useEffect(() => {
     console.log("Getting Patient Information")
-    const fetchPatientRecords = async ( patientID ) => {
+    const fetchPatientRecords = async () => {
       try {
         await fetchPatientData({ patientID })
         .then(data => {
@@ -38,7 +38,6 @@ export const MedicalInformation = ({ patientID }) => {
         keyExtractor={(item, index) => item.resource?.id || String(index)}
         renderItem={({ item }) => (
           <View style={ styles.medicalEntry }>
-            {/* <Text>ID: {item.resource.id}</Text> */}
             <Text style={styles.recordTitle}>Condition: {item.resource.code.coding[0].display}</Text>
             <Text style={styles.recordInfoText}>Status: {item.resource.clinicalStatus?.coding[0].display}</Text>
             <Text style={styles.recordInfoText}>Onset Date Time: {item.resource.onsetDateTime}</Text>

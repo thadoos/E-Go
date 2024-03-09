@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { Ionicons } from "@expo/vector-icons";
-import { colors } from "../styles/colors";
+import { colors } from "../../styles/colors";
 
 export const ProfilePicUpload = ({image, showModal, setShowModal}) => {
   
@@ -27,9 +27,9 @@ export const ProfilePicUpload = ({image, showModal, setShowModal}) => {
 
 const styles = StyleSheet.create({
   avatarPlaceholder: {
-    width: 200,
+    width: 180,
     aspectRatio: 1,
-    borderRadius: 100,
+    borderRadius: 90,
     borderColor: colors.placeholderText,
     borderWidth: 0.5,
     backgroundColor: "#fff",
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
 
   avatar: {
     position: "absolute",
-    width: 200,
+    width: 180,
     aspectRatio: 1,
-    borderRadius: 100,
+    borderRadius: 90,
   },
 
 

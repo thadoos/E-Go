@@ -1,21 +1,15 @@
+import { MedicalInformation } from './MedicalInformation';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { fetchPatientData } from '../../routers/fhirRequest';
 import { View, Text, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import React, { useEffect, useState, useRef, useMemo } from 'react'
-import { fetchPatientData } from '../routers/fhirRequest';
-import { MedicalInformation } from '../components';
-import BottomSheet from '@gorhom/bottom-sheet'
 
-
-export const UserProfile = () => {
-  const panelRef = useRef(null);
-  const snapPoints = useMemo(() => ['10%', '50%', '70%'], []);
+export const MedicalBottomSheet = ({patientID}) => {
+  const snapPoints = useMemo(() => [25, '50%', '64%', '100%'], []);
 
 
   return(
-    <View style={styles.container}>
-      <Text style={styles.text}>Some Profile Detail </Text>
-      <Text style={styles.text}>Some Profile Detail </Text>
-      <Text style={styles.text}>Some Profile Detail </Text>
-
+    // <View style={styles.container}>
       <BottomSheet 
         index={0} 
         snapPoints={snapPoints}
@@ -25,20 +19,11 @@ export const UserProfile = () => {
       >
         <Text style={styles.medicalInfoTitle}>Medical Details</Text>
         <View style = {styles.medicalInfoContainer}>
-          <MedicalInformation patientID={ 39254 }/>
+          <MedicalInformation patientID={patientID}/>
 
         </View>
         
       </BottomSheet>
-      
-
-    </View>
-
-    // <View style={styles.medicalInfoContainer}>
-    //   <Text style={styles.medicalInfoTitle}>Medical Details</Text>
-    //   <MedicalInformation patientID={ 39254 }/>
-    // </View>
-
 
   )
 }
@@ -48,7 +33,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#DCE1DE",
-    // justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
   },
@@ -60,8 +44,6 @@ const styles = StyleSheet.create({
   medicalInfoContainer:{
     width: '100%',
     backgroundColor: '#DCE1DE',
-    // borderColor: 'red',
-    // borderWidth: 1,
 
   },
 

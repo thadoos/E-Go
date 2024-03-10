@@ -1,23 +1,95 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { SignButton, MultiLineDetailsEntry } from '../../components'
-import { getDatabase, ref, set, push } from "firebase/database";
+import { getDatabase, ref, get, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import * as Location from 'expo-location';
+import fetch from 'node-fetch';
+
 
 export const ReportCasualty = () => {
   const [description, setDescription] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [location, setLocation] = useState("");
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+      fetchUserData();
+    }
+      , []);
+
+  const fetchUserData = async () => {
+    const db = getDatabase();
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(userRef);
+      if (snapshot.exists()) {
+        setUserData(snapshot.val());
+      } else {
+        console.log("No data available");
+      }
+    } else {
+      console.log("No user is signed in");
+    }
+  };
+
+
+  const getLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    setLoading(true);
+
+
+    if (status === 'granted') {
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      });
+
+      // Reverse geocoding
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.coords.latitude}&lon=${location.coords.longitude}`);
+      const data = await response.json();
+      setLoading(false);
+      setLocation(data.display_name);
+    }
+  };
+
 
   const submitReport = () => {
     if (!description || !symptoms || !location) {
       alert('All fields must be filled out');
       return;
     }
-    
+
     // Get a reference to the Firebase database
     const db = getDatabase();
+
+
+    const fetchUserData = async () => {
+      const db = getDatabase();
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userRef = ref(db, `users/${user.uid}`);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          setUserData(snapshot.val());
+        } else {
+          console.log("No data available");
+        }
+      } else {
+        console.log("No user is signed in");
+      }
+    };
+
+
 
     // Create a new entry in the "casualties" collection
 
@@ -57,19 +129,40 @@ export const ReportCasualty = () => {
   return (
     <View alignItems="center">
       <View style={styles.nameContainer}>
-        <Ionicons
-          name="person"
-          size={100}
-          color="#888888"
-          style={styles.ioniconStyle}
-        />
+        {userData.avatar
+          ? <Image source={{ uri: userData.avatar }} style={styles.profileImage} />
+          : <Ionicons
+            name="person"
+            size={100}
+            color="#888888"
+            style={styles.ioniconStyle}
+          />
+        }
       </View>
 
-      <View style={{marginBottom: 30}}>
-      <MultiLineDetailsEntry titleText={"Description of Incident: "} lineNumber={3} text={description} setText={setDescription} />
-      <MultiLineDetailsEntry titleText={"Symptoms: "} lineNumber={3} text={symptoms} setText={setSymptoms} />
-      <MultiLineDetailsEntry titleText={"Location: "} lineNumber={1} text={location} setText={setLocation} />
-      
+      <View style={{ marginBottom: 10 }}>
+        <MultiLineDetailsEntry titleText={"Description of Incident: "} lineNumber={3} text={description} setText={setDescription} />
+        <MultiLineDetailsEntry titleText={"Symptoms: "} lineNumber={3} text={symptoms} setText={setSymptoms} />
+        <MultiLineDetailsEntry
+          titleText={"Location: "}
+          lineNumber={1}
+          text={location}
+          setText={setLocation}
+        />
+        <View alignItems="center">
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <>
+              {/* Rest of your component */}
+              <TouchableOpacity onPress={getLocation}>
+                <Text style={styles.locationButton}>Use Current Location</Text>
+              </TouchableOpacity>
+              {/* Rest of your component */}
+            </>
+          )}
+        </View>
+
       </View>
       <TouchableOpacity style={styles.buttonContainer} onPress={submitReport}>
         <Text style={styles.buttonText}>Submit</Text>
@@ -78,7 +171,7 @@ export const ReportCasualty = () => {
   )
 }
 
-export default ReportCasualty 
+export default ReportCasualty
 
 const styles = StyleSheet.create({
   nameContainer: {
@@ -106,16 +199,14 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
 
   },
-  ioniconStyle: {
-  },
 
   buttonContainer: {
     width: '75%',
     backgroundColor: '#000',
     paddingVertical: 15,
     borderRadius: 20,
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
     textAlign: 'center',
@@ -126,5 +217,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     color: '#088AE8',
-  }
+  },
+  locationButton: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#088AE8',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  profileImage: {
+    width: 130,
+    height: 130,
+    borderRadius: 100,
+  },
 })

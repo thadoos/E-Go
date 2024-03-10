@@ -35,7 +35,7 @@ export const ViewProfile = () => {
   return (
     <View style={styles.container}>
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={{uri: userData.avatar}} style={styles.profileImage} />
+      <Image source={userData.avatar ? {uri: userData.avatar} : userProfileImage} style={styles.profileImage} />
       <Text style={styles.username}>{userData.firstName} {userData.lastName}</Text>
       <View style={styles.infoContainer}>
         <InfoRow

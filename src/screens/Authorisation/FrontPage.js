@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
-import { AppLogo, DetailsEntry, SignupIcon } from "../../components";
+import { DetailsEntry } from "../../components/UserEntryFields";
+import { AppLogo,SignupIcon } from "../../components"
 import { useState } from "react";
 import { handleLogin } from '../../components/AuthHandlers';
 import { useNavigation } from "@react-navigation/native";

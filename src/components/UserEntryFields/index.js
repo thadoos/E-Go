@@ -6,4 +6,3 @@ export { ProfilePicUpload } from "./ProfilePicUpload";
 export { UploadPictureModal } from './UploadPictureModal';
 export { RoleGenderEntry } from "./RoleGenderEntry";
 export { SignUpDetailEntry } from "./SignUpDetailEntry";
-export { UploadPictureModal } from "./UploadPictureModal"

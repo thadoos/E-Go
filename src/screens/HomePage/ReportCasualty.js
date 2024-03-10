@@ -5,7 +5,7 @@ import { SignButton, MultiLineDetailsEntry } from '../../components'
 import { getDatabase, ref, get, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import * as Location from 'expo-location';
-
+import CasualtyList from '../../components/CasualtyList/CasualtyList';
 
 export const ReportCasualty = () => {
   const [description, setDescription] = useState("");
@@ -124,12 +124,20 @@ export const ReportCasualty = () => {
   // Call the submitReport function when the Submit button is pressed
   // create a new button - below is the supposed button code but didn't work (function not called) - declan. (stored a copy of it in case resolved asap)
   <SignButton text="Submit" borderStyle="buttonContainer" textStyle="buttonText" navigationTarget="Home Page" onPress={submitReport} />
+  const [showCasualtyModal, setShowCasualtyModal] = useState(false);
+  const [fhirID, setfhirID] = useState(null); // Either has 'null' meaning that this person is not in the proximity or the fhirID
+  const [casualtyImage, setCasualtyImage] = useState(null);
 
   return (
-    <View alignItems="center" style={{justifyContent: 'center'}}>
-      <View style={styles.nameContainer}>
-        {userData.avatar
-          ? <Image source={{ uri: userData.avatar }} style={styles.profileImage} />
+    <View style={styles.container}>
+      <TouchableOpacity 
+        style={styles.chooseCasualtyButton}
+        onPress={() => {
+          setShowCasualtyModal(true)
+        }}
+      >
+        {casualtyImage
+          ? <Image source={casualtyImage} style={styles.profileImage} />
           : <Ionicons
             name="person"
             size={100}
@@ -137,7 +145,11 @@ export const ReportCasualty = () => {
             style={styles.ioniconStyle}
           />
         }
-      </View>
+
+      </TouchableOpacity>
+
+      {showCasualtyModal && <CasualtyList setShowCasualtyModal={setShowCasualtyModal} setfhirID={setfhirID} setCasualtyImage={setCasualtyImage}/>}
+
 
       <View style={{ marginBottom: 10 }}>
         <MultiLineDetailsEntry titleText={"Description of Incident: "} lineNumber={3} text={description} setText={setDescription} />
@@ -173,10 +185,15 @@ export const ReportCasualty = () => {
 export default ReportCasualty
 
 const styles = StyleSheet.create({
+  container:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
   nameContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: "20%",
+    // marginTop: "20%",
     borderRadius: 65,
     borderWidth: .5,
     width: 130,
@@ -199,6 +216,16 @@ const styles = StyleSheet.create({
 
   },
 
+  chooseCasualtyButton:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderRadius: 65,
+    borderWidth: .5,
+    width: 130,
+    height: 130,
+  },
+
   buttonContainer: {
     width: '75%',
     backgroundColor: '#000',
@@ -206,9 +233,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   buttonText: {
-    textAlign: 'center',
     color: '#FFF',
     fontWeight: '700',
   },

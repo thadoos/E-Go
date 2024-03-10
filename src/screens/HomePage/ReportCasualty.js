@@ -100,7 +100,7 @@ export const ReportCasualty = () => {
     const auth = getAuth();
     const reporterID = auth.currentUser.uid;
 
-    const fhriID = userData.fhirid;
+    const fhirID = userData.fhirid;
 
 
     // Set the values of the new entry
@@ -109,7 +109,7 @@ export const ReportCasualty = () => {
       symptoms: symptoms,
       location:{location, latitude: currentLocation.latitude, longitude: currentLocation.longitude},
       userid: reporterID,
-      fhrID: fhriID
+      fhirID: fhirID
     })
       .then(() => {
         alert('Report submitted successfully');

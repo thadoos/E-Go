@@ -7,8 +7,8 @@ import { getDatabase, ref, get } from "firebase/database";
 
 export const ViewCases = () => {
   const [casualties, setCasualties] = useState([]);
-  const patientID = "39254" // This should be somehow set to the casualty's patientID
-
+  // const patientID = "39254" // This should be somehow set to the casualty's patientID
+  const [patientID, setPatientID] = useState(39254);
   const fetchCasualties = async () => {
     const db = getDatabase();
     const casualtiesRef = ref(db, 'casualties');
@@ -24,6 +24,8 @@ export const ViewCases = () => {
     fetchCasualties();
   }, []);
 
+  const [showMedical, setShowMedical] = useState(false);
+  const [snapPoint ,setSnapPoint] = useState(0);
   return (
     <View style={styles.container}>
       {/* Map Goes Here */}
@@ -33,21 +35,32 @@ export const ViewCases = () => {
       </TouchableOpacity>
 
       <FlatList
-  data={casualties}
-  keyExtractor={(item) => item.id}
-  renderItem={({ item }) => (
-    <View style={styles.caseContainer}>
-      <Text style={styles.caseLabel}>Description:</Text>
-      <Text style={styles.caseDescription}>{item.description}</Text>
-      <Text style={styles.caseLabel}>Location:</Text>
-      <Text style={styles.caseLocation}>{item?.location?.location}</Text>
-      <Text style={styles.caseLabel}>Symptoms:</Text>
-      <Text style={styles.caseSymptoms}>{item.symptoms}</Text>
-    </View>
-  )}
-/>
+        data={casualties}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity 
+            style={styles.caseContainer}
+            onPress={() => {
+              console.log(item.fhirID);
+              setPatientID(item.fhirID);
+              setShowMedical(true);
+              setSnapPoint(0);
+            }}
+          >
+            <Text style={styles.caseLabel}>Description:</Text>
+            <Text style={styles.caseDescription}>{item.description}</Text>
+            <Text style={styles.caseLabel}>Location:</Text>
+            <Text style={styles.caseLocation}>{item?.location?.location}</Text>
+            <Text style={styles.caseLabel}>Symptoms:</Text>
+            <Text style={styles.caseSymptoms}>{item.symptoms}</Text>
+          </TouchableOpacity>
 
-      <MedicalBottomSheet patientID = {patientID}/>
+        
+        )}
+      />
+      {showMedical && <MedicalBottomSheet patientID = {patientID} setSnapPoint={snapPoint}/>}
+
+      
     </View>
   )
 }

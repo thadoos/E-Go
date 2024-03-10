@@ -41,7 +41,7 @@ const CasualtyList = ({setShowCasualtyModal, setfhirID, setCasualtyImage}) => {
       <View style={styles.modalContainer}>
         <Text style={styles.title}>List of Casualties</Text>
         <FlatList
-          showsVerticalScrollIndicator="false"
+          showsVerticalScrollIndicator={false}
           data = { casualtyData }
           style = {styles.flatList}
           keyExtractor={(item) => item.name}

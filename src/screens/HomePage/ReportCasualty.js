@@ -107,7 +107,9 @@ export const ReportCasualty = () => {
     set(newCasualtyRef, {
       description: description,
       symptoms: symptoms,
-      location:{location, latitude: currentLocation.latitude, longitude: currentLocation.longitude},
+      location:{location, 
+        latitude: currentLocation.latitude ? currentLocation.latitude : "51.5233293817482", 
+        longitude: currentLocation.longitude ? currentLocation.longitude : "-0.1334391199416146"},
       userid: reporterID,
       fhirID: fhirID
     })

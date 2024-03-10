@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../../styles/colors";
@@ -56,73 +57,80 @@ export const SignUp = () => {
 
   return (
     <View style={styles.container}>
-      
+
+
       <Text style={styles.signupText}>Sign Up</Text>
-      
-      <ProfilePicUpload image={user.avatar} showModal={showModal} setShowModal={setShowModal}/>
+        
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        backgroundColor={"#DCE1DE"}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContentStyle}
+      >
+        <ProfilePicUpload image={user.avatar} showModal={showModal} setShowModal={setShowModal}/>
 
-      <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
 
-        <NameEntry updateUserDetails={updateUserDetails}/>
+          <NameEntry updateUserDetails={updateUserDetails}/>
 
-        <SignUpDetailEntry 
-          value={user.email}
-          fieldName="email"
-          ioniconName="mail"
-          placeholder="Email"
-          autoCapitalize="none"
-          updateUserDetails={updateUserDetails}
-        />
-        <SignUpDetailEntry 
-          value={user.phone}
-          fieldName="phone"
-          ioniconName="phone-portrait"
-          placeholder="Phone Number"
-          keyboardType="phone-pad"
-          updateUserDetails={updateUserDetails}
-        />
-        <SignUpDetailEntry 
-          value={user.password}
-          fieldName="password"
-          ioniconName="key"
-          placeholder="Password"
-          secureTextEntry
-          updateUserDetails={updateUserDetails}
-          autoCapitalize="none"
-        />
-        <SignUpDetailEntry 
-          value={user.address}
-          fieldName="address"
-          ioniconName="map"
-          placeholder="Address"
-          updateUserDetails={updateUserDetails}
-        />
-        <SignUpDetailEntry 
-          value={user.fhirID}
-          fieldName="fhirID"
-          ioniconName="id-card"
-          placeholder="FHIR ID"
-          updateUserDetails={updateUserDetails}
-        />
-        {/* <DateEntry updateUserDetails={updateUserDetails} user={user}/> */}
-        <RoleGenderEntry user={user} updateUserDetails={updateUserDetails}/>
+          <SignUpDetailEntry 
+            value={user.email}
+            fieldName="email"
+            ioniconName="mail"
+            placeholder="Email"
+            autoCapitalize="none"
+            updateUserDetails={updateUserDetails}
+          />
+          <SignUpDetailEntry 
+            value={user.phone}
+            fieldName="phone"
+            ioniconName="phone-portrait"
+            placeholder="Phone Number"
+            keyboardType="phone-pad"
+            updateUserDetails={updateUserDetails}
+          />
+          <SignUpDetailEntry 
+            value={user.password}
+            fieldName="password"
+            ioniconName="key"
+            placeholder="Password"
+            secureTextEntry
+            updateUserDetails={updateUserDetails}
+            autoCapitalize="none"
+          />
+          <SignUpDetailEntry 
+            value={user.address}
+            fieldName="address"
+            ioniconName="map"
+            placeholder="Address"
+            updateUserDetails={updateUserDetails}
+          />
+          <SignUpDetailEntry 
+            value={user.fhirID}
+            fieldName="fhirID"
+            ioniconName="id-card"
+            placeholder="FHIR ID"
+            updateUserDetails={updateUserDetails}
+          />
+          {/* <DateEntry updateUserDetails={updateUserDetails} user={user}/> */}
+          <RoleGenderEntry user={user} updateUserDetails={updateUserDetails}/>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress = {() => handleSignUp({user, navigation})}
-            style={styles.signupButton}>
-            <Text style={styles.signupButtonText}>Sign Up</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress = {() => handleSignUp({user, navigation})}
+              style={styles.signupButton}>
+              <Text style={styles.signupButtonText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.backContainer}>
+            <Text style={styles.backDescriptionText}>Back to Login?</Text>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.backButton}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.backContainer}>
-          <Text style={styles.backDescriptionText}>Back to Login?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.backButton}>Login</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-
+      </ScrollView>
 
         
       {showModal && <UploadPictureModal showModal={showModal} updateUserDetails={updateUserDetails} setShowModal={setShowModal}/>}
@@ -141,16 +149,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
+    // borderColor: 'blue',
+    // borderWidth: 1,
+  },
+
+  scrollView:{
+    width: '70%',
+    height: 300,
+    // borderColor: 'red',
+    // borderWidth: 1,
+
+  },
+
+  scrollContentStyle:{
+    justifyContent: 'center',
   },
 
   inputContainer: {
     // This is the container for all input fields
-    width: "70%",
+    width: "100%",
     alignItems: "stretch",
   },
 
   signupText: {
     textAlign: "center",
+    marginTop: 100,
     marginBottom: 20,
     fontWeight: "800",
     fontSize: 25,

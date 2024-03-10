@@ -8,7 +8,7 @@ export const ProfilePicUpload = ({image, showModal, setShowModal}) => {
 
   return (
     <TouchableOpacity 
-      style={styles.avatarPlaceholder}
+      style={styles.avatarTouchable}
       onPress={() => {
         setShowModal(!showModal);
       }}  
@@ -26,7 +26,7 @@ export const ProfilePicUpload = ({image, showModal, setShowModal}) => {
 
 
 const styles = StyleSheet.create({
-  avatarPlaceholder: {
+  avatarTouchable: {
     width: 180,
     aspectRatio: 1,
     borderRadius: 90,
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: 'center',
     marginBottom: 40,
   },
 

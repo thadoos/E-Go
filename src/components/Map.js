@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE, Callout } from 'react-native-maps';
 import * as FileSystem from 'expo-file-system';
 import * as Location from 'expo-location';
 import { shareAsync } from 'expo-sharing';
+import { getDatabase, ref, get } from "firebase/database";
 
 function getDistance(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
@@ -17,27 +18,34 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.asin(Math.sqrt(a));
 }
 
-export function Map() {
+export const Map = () => {
   const [hasPermission, setHasPermission] = useState(false);
   const [doctorLocation, setDoctorLocation] = useState(null);
   const [casualties, setCasualties] = useState([]);
-  const [closestCasualtyIndex, setClosestCasualtyIndex] = useState(null);
   const mapRef = useRef(null);
 
-  const generateCasualties = () => {
-    let casualtyArray = [];
-    for (let i = 0; i < 5; i++) { // Generate 5 casualties for demonstration
-      casualtyArray.push({
-        id: i,
-        name: `Casualty ${i + 1}`,
-        age: Math.floor(Math.random() * 30) + 20, // Random age between 20 and 50
-        gender: Math.random() > 0.5 ? 'Male' : 'Female',
-        condition: 'Stable',
-        latitude: Math.random() * 180 - 90,
-        longitude: Math.random() * 360 - 180,
-      });
+  const generateCasualties = async () => {
+    const db = getDatabase();
+    const casualtiesRef = ref(db, 'casualties');
+    const snapshot = await get(casualtiesRef);
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      let casualtyArray = [];
+      for (let id in data) {
+        console.log(data[id]);
+        casualtyArray.push({
+          description: data[id].description,
+          symptoms: data[id].symptoms,
+          location: data[id].location,
+          latitude: parseFloat(data[id].latitude),
+          longitude: parseFloat(data[id].longitude),
+        });
+      }
+      return casualtyArray;
+    } else {
+      console.log("No data available");
+      return [];
     }
-    return casualtyArray;
   };
 
   useEffect(() => {
@@ -52,19 +60,8 @@ export function Map() {
           longitude: location.coords.longitude
         });
 
-        const newCasualties = generateCasualties();
+        const newCasualties = await generateCasualties();
         setCasualties(newCasualties);
-
-        let closestDistance = Number.MAX_VALUE;
-        let closestIndex = null;
-        newCasualties.forEach((casualty, index) => {
-          const distance = getDistance(location.coords.latitude, location.coords.longitude, casualty.latitude, casualty.longitude);
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
-          }
-        });
-        setClosestCasualtyIndex(closestIndex);
       }
     })();
   }, []);
@@ -75,36 +72,51 @@ export function Map() {
 
   return (
     <View style={styles.container}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        ref={mapRef}
-        style={styles.map}
-        initialRegion={{
-          latitude: doctorLocation ? doctorLocation.latitude : 0,
-          longitude: doctorLocation ? doctorLocation.longitude : 0,
-          latitudeDelta: 100,
-          longitudeDelta: 100,
-        }}
-      >
-        {doctorLocation && (
+      {doctorLocation ? (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          ref={mapRef}
+          style={styles.map}
+          initialRegion={{
+            latitude: doctorLocation.latitude,
+            longitude: doctorLocation.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}
+        >
           <Marker
             coordinate={doctorLocation}
-            title="Doctor/Paramedic"
+            title="You"
             pinColor="#0000ff"
           />
-        )}
-        {casualties.map((casualty, index) => {
-          const distance = doctorLocation ? getDistance(doctorLocation.latitude, doctorLocation.longitude, casualty.latitude, casualty.longitude) : 0;
-          return (
-            <Marker
-              key={casualty.id}
-              coordinate={{ latitude: casualty.latitude, longitude: casualty.longitude }}
-              pinColor={index === closestCasualtyIndex ? "#ff0000" : "#ffa500"} // Closest is red, others are orange
-              onPress={() => alert(`Name: ${casualty.name}\nAge: ${casualty.age}\nGender: ${casualty.gender}\nCondition: ${casualty.condition}\nLocation: (${casualty.latitude.toFixed(2)}, ${casualty.longitude.toFixed(2)})\nDistance: ${distance.toFixed(2)} km`)}
-            />
-          );
-        })}
-      </MapView>
+          {casualties.map((casualty, index) => {
+            const { location } = casualty;
+            if (!location || !location.latitude || !location.longitude) {
+              console.error(`Invalid coordinates for casualty ${index}: ${location?.latitude}, ${location?.longitude}`);
+              return null;
+            }
+
+            return (
+              <Marker
+                key={casualty.id}
+                coordinate={{
+                  latitude: parseFloat(location.latitude),
+                  longitude: parseFloat(location.longitude)
+                }}
+                pinColor="#ff0000"
+              >
+                <Callout>
+                  <Text>Description: {casualty.description}</Text>
+                  <Text>Symptoms: {casualty.symptoms}</Text>
+                  <Text>Location: {location.location}</Text>
+                </Callout>
+              </Marker>
+            );
+          })}
+        </MapView>
+      ) : (
+        <Text>Loading...</Text>
+      )}
       <StatusBar style="auto" />
     </View>
   );

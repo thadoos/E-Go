@@ -5,7 +5,7 @@ import { SignButton, MultiLineDetailsEntry } from '../../components'
 import { getDatabase, ref, get, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import * as Location from 'expo-location';
-import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 
 
 export const ReportCasualty = () => {
@@ -37,8 +37,9 @@ export const ReportCasualty = () => {
     } else {
       console.log("No user is signed in");
     }
+    setLocation(userData.address);
+    // console.log(userData.fhirid);
   };
-
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -100,15 +101,16 @@ export const ReportCasualty = () => {
     const auth = getAuth();
     const reporterID = auth.currentUser.uid;
 
+    const fhriID = userData.fhirid;
+
+
     // Set the values of the new entry
     set(newCasualtyRef, {
       description: description,
       symptoms: symptoms,
-      location: {
-        lat: lat,
-        long: long
-      },
-      userid: reporterID
+      location:{location, latitude: currentLocation.latitude, longitude: currentLocation.longitude},
+      userid: reporterID,
+      fhrID: fhriID
     })
       .then(() => {
         alert('Report submitted successfully');
@@ -127,7 +129,7 @@ export const ReportCasualty = () => {
   <SignButton text="Submit" borderStyle="buttonContainer" textStyle="buttonText" navigationTarget="Home Page" onPress={submitReport} />
 
   return (
-    <View alignItems="center">
+    <View alignItems="center" backgroundColor="#DCE1DE">
       <View style={styles.nameContainer}>
         {userData.avatar
           ? <Image source={{ uri: userData.avatar }} style={styles.profileImage} />

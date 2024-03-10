@@ -148,9 +148,8 @@ export const ReportCasualty = () => {
           ? <Image source={casualtyImage} style={styles.profileImage} />
           : <Ionicons
             name="person"
-            size={100}
+            size={50}
             color="#888888"
-            style={styles.ioniconStyle}
           />
         }
 
@@ -202,7 +201,6 @@ const styles = StyleSheet.create({
   nameContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    // marginTop: "20%",
     borderRadius: 65,
     borderWidth: .5,
     width: 130,
@@ -231,8 +229,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 65,
     borderWidth: .5,
+    borderColor: '#888888',
     width: 130,
     height: 130,
+    overflow: 'hidden',
   },
 
   buttonContainer: {
@@ -264,6 +264,6 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 130,
     height: 130,
-    borderRadius: 100,
+    borderRadius: 65,
   },
 })

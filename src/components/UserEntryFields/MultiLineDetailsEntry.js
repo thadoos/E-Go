@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   lineEntry: {
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: '#888888',
+    borderWidth: .5,
     borderRadius: 10,
+    // backgroundColor:'#fff',
     width: 300,
     height: 70,
     alignSelf: 'center',

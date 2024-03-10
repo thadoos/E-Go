@@ -117,7 +117,7 @@ export const Map = () => {
                 >
                   <Text>Description: {casualty.description}</Text>
                   <Text>Symptoms: {casualty.symptoms}</Text>
-                  <Text>Location: {location.location}</Text>
+                  <Text>Location: {location.address}</Text>
                 </Callout>
               </Marker>
             );

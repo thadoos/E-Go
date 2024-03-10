@@ -7,7 +7,7 @@ const userProfileImage = require("../../../assets/userprofile.jpeg");
 
 export const ViewProfile = () => {
   const [userData, setUserData] = useState({});
-  const patientID = "39254" // change this so it retrieves to FHIR data from Firebase of this user
+  const patientID = 39254 // change this so it retrieves to FHIR data from Firebase of this user
 
   const fetchUserData = async () => {
     const db = getDatabase();
@@ -47,7 +47,7 @@ export const ViewProfile = () => {
           
         </View>
       </ScrollView>
-      <MedicalBottomSheet patientID={patientID} />
+      <MedicalBottomSheet patientID={userData.fhirID} setSnapPoint={0}/>
     </View>
   );
 };

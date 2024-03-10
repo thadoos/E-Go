@@ -4,19 +4,28 @@ import { fetchPatientData } from '../../routers/fhirRequest';
 import { View, Text, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 
-export const MedicalBottomSheet = ({patientID}) => {
-  const snapPoints = useMemo(() => [25, '50%', '64%', '100%'], []);
+export const MedicalBottomSheet = ({patientID, setSnapPoint}) => {
+  const snapPoints = useMemo(() => [25, 200, '20%','50%', '64%', '100%'], []);
 
+  const bottomSheetRef = useRef(null);
 
+  useEffect(() => {
+
+    bottomSheetRef.current?.snapToIndex(setSnapPoint);
+
+  }, [setSnapPoint]);
+  console.log(bottomSheetRef)
   return(
-    // <View style={styles.container}>
+    
       <BottomSheet 
-        index={0} 
+        index={1} 
         snapPoints={snapPoints}
         backgroundStyle={{ backgroundColor: '#ADB2AF'}} //FF6969 ADB2AF
         handleIndicatorStyle={{backgroundColor:'#FFF'}}
+        ref={bottomSheetRef}
         
       >
+        
         <Text style={styles.medicalInfoTitle}>Medical Details</Text>
         <View style = {styles.medicalInfoContainer}>
           <MedicalInformation patientID={patientID}/>
@@ -45,6 +54,7 @@ const styles = StyleSheet.create({
   medicalInfoContainer:{
     width: '100%',
     backgroundColor: '#DCE1DE',
+    flex: 1,
 
   },
 

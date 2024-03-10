@@ -6,6 +6,7 @@ import * as FileSystem from 'expo-file-system';
 import * as Location from 'expo-location';
 import { shareAsync } from 'expo-sharing';
 import { getDatabase, ref, get } from "firebase/database";
+import { MedicalBottomSheet } from './Medical';
 
 function getDistance(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
@@ -23,7 +24,7 @@ export const Map = () => {
   const [doctorLocation, setDoctorLocation] = useState(null);
   const [casualties, setCasualties] = useState([]);
   const mapRef = useRef(null);
-
+  const [patientID, setPatientID] = useState(null);
   const generateCasualties = async () => {
     const db = getDatabase();
     const casualtiesRef = ref(db, 'casualties');
@@ -37,6 +38,7 @@ export const Map = () => {
           description: data[id].description,
           symptoms: data[id].symptoms,
           location: data[id].location,
+          fhirID: data[id].fhirID,
           latitude: parseFloat(data[id].latitude),
           longitude: parseFloat(data[id].longitude),
         });
@@ -104,8 +106,15 @@ export const Map = () => {
                   longitude: parseFloat(location.longitude)
                 }}
                 pinColor="#ff0000"
+                onPress={()=>{
+                  console.log("pressed")
+                  setPatientID(casualty.fhirID)
+                  console.log(casualty)
+                }}
               >
-                <Callout>
+                <Callout
+                  
+                >
                   <Text>Description: {casualty.description}</Text>
                   <Text>Symptoms: {casualty.symptoms}</Text>
                   <Text>Location: {location.location}</Text>
@@ -117,6 +126,8 @@ export const Map = () => {
       ) : (
         <Text>Loading...</Text>
       )}
+
+      <MedicalBottomSheet patientID = {patientID} setSnapPoint={0}/>
       <StatusBar style="auto" />
     </View>
   );

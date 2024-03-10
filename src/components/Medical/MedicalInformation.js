@@ -23,7 +23,7 @@ export const MedicalInformation = ({ patientID }) => {
       }
     }
     fetchPatientRecords();
-  }, []);
+  }, [patientID]);
   
 
   if (isLoading) {

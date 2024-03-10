@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
+    borderColor: '#000',
   },
   buttonText: {
     color: '#FFF',

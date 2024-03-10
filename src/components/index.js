@@ -4,10 +4,8 @@ export { SignButton } from './SignButton';
 export { SignupIcon } from './SignupIcon';
 
 export { SignUpDetailEntry } from "./UserEntryFields/SignUpDetailEntry";
-export { UploadPictureModal } from './UploadPictureModal'
-export { ProfilePicUpload } from './UserEntryFields/ProfilePicUpload'
-export { NameEntry } from './UserEntryFields/NameEntry'
-export { RoleGenderEntry } from './UserEntryFields/RoleGenderEntry'
-export { DateEntry } from './UserEntryFields/DateEntry'
+export { NameEntry } from './UserEntryFields/NameEntry';
+export { RoleGenderEntry } from './UserEntryFields/RoleGenderEntry';
+export { DateEntry } from './UserEntryFields/DateEntry';
 export {MultiLineDetailsEntry} from './UserEntryFields/MultiLineDetailsEntry';
 export {Map} from './Map';

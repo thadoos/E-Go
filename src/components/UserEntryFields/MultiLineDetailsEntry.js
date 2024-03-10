@@ -21,7 +21,7 @@ export const MultiLineDetailsEntry = ({titleText, lineNumber, text, setText}) =>
 const styles = StyleSheet.create({
   title: { 
     alignSelf: 'center',
-     marginTop: "10%", 
+     marginTop: "5%", 
      fontSize: 16, 
      fontWeight: "900" 
   },
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: 300,
-    height: 50,
+    height: 70,
     alignSelf: 'center',
   },
 })

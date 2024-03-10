@@ -65,7 +65,7 @@ export function HomeNavigation() {
         component={ReportCasualty} 
         options={{ tabBarActiveTintColor: 'red' }}
       />
-      {userData.role === 'Doctor' && (
+      {(userData.role === 'Doctor' || userData.role === 'Paramedic')&& (
         <Tab.Screen 
           name="Cases" 
           component={ViewCases} 
@@ -73,11 +73,12 @@ export function HomeNavigation() {
         />
       
       )}
+      {(userData.role === 'Doctor' || userData.role === 'Paramedic')&& (
       <Tab.Screen 
         name="Map"
         component={Map}
         options={{ tabBarActiveTintColor: 'green' }} // Set active tint color to green
-      />
+      />)}
     </Tab.Navigator>
   );
 }

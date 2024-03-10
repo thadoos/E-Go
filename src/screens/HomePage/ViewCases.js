@@ -50,7 +50,7 @@ export const ViewCases = () => {
             <Text style={styles.caseLabel}>Description:</Text>
             <Text style={styles.caseDescription}>{item.description}</Text>
             <Text style={styles.caseLabel}>Location:</Text>
-            <Text style={styles.caseLocation}>{item?.location?.location}</Text>
+            <Text style={styles.caseLocation}>{item?.location?.address}</Text>
             <Text style={styles.caseLabel}>Symptoms:</Text>
             <Text style={styles.caseSymptoms}>{item.symptoms}</Text>
           </TouchableOpacity>

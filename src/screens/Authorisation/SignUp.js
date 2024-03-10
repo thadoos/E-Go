@@ -28,7 +28,6 @@ export const SignUp = () => {
     role: "",
     gender: "",
     fhirID: "",
-    dob: null,
   });
 
   const navigation = useNavigation();

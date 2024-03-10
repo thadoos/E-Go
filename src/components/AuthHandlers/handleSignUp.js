@@ -20,12 +20,13 @@ export function handleSignUp({user, navigation}){
         console.log("Signed up with:", firebaseUser.email);
         const db = getDatabase();
         set(ref(db, 'users/' + firebaseUser.uid), {
+            avatar: user.avatar,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             phone: user.phone,
             address: user.address,
-            fhirid: user.fhirID,
+            fhirID: user.fhirID,
             role: user.role,
             gender: user.gender
         });

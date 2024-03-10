@@ -40,6 +40,7 @@ export const FrontPage = () => {
             keyboardType={"email-address"}
             value={email}
             onChangeText={setEmail}
+            autoCapitalize="none"
           />
           <DetailsEntry
             fieldName={"Password"}

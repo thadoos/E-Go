@@ -88,6 +88,7 @@ export const SignUp = () => {
           placeholder="Password"
           secureTextEntry
           updateUserDetails={updateUserDetails}
+          autoCapitalize="none"
         />
         <SignUpDetailEntry 
           value={user.address}

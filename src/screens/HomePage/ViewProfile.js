@@ -34,77 +34,80 @@ export const ViewProfile = () => {
 
   return (
     <View style={styles.container}>
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={userData.avatar ? {uri: userData.avatar} : userProfileImage} style={styles.profileImage} />
-      <Text style={styles.username}>{userData.firstName} {userData.lastName}</Text>
-      <View style={styles.infoContainer}>
-        <InfoRow
-          title="Address:"
-          value={userData.address}
-        />
-        <InfoRow title="Role:" value={userData.role} />
-        <InfoRow title="Phone No.:" value={userData.phone} />
-        <InfoRow title="Gender:" value={userData.gender} />
-        
-      </View>
-    </ScrollView>
-    <MedicalBottomSheet patientID={patientID} />
-  </View>
+      <ScrollView contentContainerStyle={styles.subContainer} style={{ width: '65%' }}>
+        <Image source={userData.avatar ? {uri: userData.avatar} : userProfileImage} style={styles.profileImage} />
+        <Text style={styles.username}>{userData.firstName} {userData.lastName}</Text>
+        <View style={styles.infoContainer}>
+          <InfoRow title="Address:" value={userData.address}/>
+          <InfoRow title="Email:" value={userData.email} styleType="oneLine"/>
+          <InfoRow title="Role:" value={userData.role} styleType="oneLine" />
+          <InfoRow title="Phone No.:" value={userData.phone} styleType="oneLine" />
+          <InfoRow title="Gender:" value={userData.gender} styleType="oneLine" />
+          <InfoRow title="FHIR ID:" value={userData.fhirID} styleType="oneLine" />
+          
+        </View>
+      </ScrollView>
+      <MedicalBottomSheet patientID={patientID} />
+    </View>
   );
 };
 
-const InfoRow = ({ title, value }) => {
+const InfoRow = ({ title, value, styleType }) => {
   return (
-    <View style={styles.infoRow}>
+    <View style={[styles.infoRow, styleType==="oneLine" && styles.oneLine]}> 
+
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.value}>{value}</Text>
     </View>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    backgroundColor: "#DCE1DE",
-    alignItems: "center",
-    paddingVertical: 20,
-  },
-  subContainer: {
-    flexGrow: 1,
-    height: "10%",
     flex: 1,
     backgroundColor: "#DCE1DE",
     alignItems: "center",
-    paddingVertical: 20,
+    justifyContent: 'center',
+  },
+
+  subContainer:{
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   username: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: "900",
     textAlign: "center",
-    marginTop: -10,
+    marginVertical: 25,
   },
   profileImage: {
     width: 200,
     height: 200,
     borderRadius: 100,
-    marginBottom: 20,
   },
   infoContainer: {
-    width: "80%",
+    width: "100%",
     marginBottom: 20,
-    marginLeft: -20,
   },
   infoRow: {
     marginBottom: 10,
   },
+  oneLine:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginRight: 10,
   },
   value: {
-    fontSize: 15,
+    fontSize: 18,
+    
   },
 });
 

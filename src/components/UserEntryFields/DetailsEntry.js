@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { useState } from "react";
 
-export const DetailsEntry = ({fieldName, keyboardType = "default", secureTextEntry = false, onChangeText}) => {
+export const DetailsEntry = ({fieldName, keyboardType = "default", secureTextEntry = false, onChangeText, autoCapitalize}) => {
   const [textEntry, setTextEntry] = useState('');
 
   const handleTextChange = (text) => {
@@ -16,6 +16,7 @@ export const DetailsEntry = ({fieldName, keyboardType = "default", secureTextEnt
       style={styles.input}
       keyboardType= {keyboardType}
       secureTextEntry = {secureTextEntry}
+      autoCapitalize={autoCapitalize}
 
       //Backend
       onChangeText={handleTextChange} 

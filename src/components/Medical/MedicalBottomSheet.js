@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#DCE1DE",
     alignItems: 'center',
     paddingTop: 100,
+    zIndex: 1,
   },
 
   text: {

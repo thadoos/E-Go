@@ -5,3 +5,4 @@ export { NameEntry } from "./NameEntry";
 export { ProfilePicUpload } from "./ProfilePicUpload";
 export { RoleGenderEntry } from "./RoleGenderEntry";
 export { SignUpDetailEntry } from "./SignUpDetailEntry";
+export { UploadPictureModal } from "./UploadPictureModal"

@@ -14,9 +14,7 @@ export const fetchPatientData = async ({ patientID }) => {
 
   const data = await response.json();
 
-  console.log(data)
+  // console.log(data)
   return data;
 
 }
-
-// http://hapi.fhir.org/baseR4/Condition?patient=39254

@@ -5,7 +5,6 @@ import { SignButton, MultiLineDetailsEntry } from '../../components'
 import { getDatabase, ref, get, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import * as Location from 'expo-location';
-import fetch from 'node-fetch';
 
 
 export const ReportCasualty = () => {
@@ -127,7 +126,7 @@ export const ReportCasualty = () => {
   <SignButton text="Submit" borderStyle="buttonContainer" textStyle="buttonText" navigationTarget="Home Page" onPress={submitReport} />
 
   return (
-    <View alignItems="center">
+    <View alignItems="center" style={{justifyContent: 'center'}}>
       <View style={styles.nameContainer}>
         {userData.avatar
           ? <Image source={{ uri: userData.avatar }} style={styles.profileImage} />

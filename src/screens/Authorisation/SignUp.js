@@ -100,7 +100,7 @@ export const SignUp = () => {
         <SignUpDetailEntry 
           value={user.fhirID}
           fieldName="fhirID"
-          ioniconName="map"
+          ioniconName="id-card"
           placeholder="FHIR ID"
           updateUserDetails={updateUserDetails}
         />
@@ -138,8 +138,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     backgroundColor: colors.background,
-    justifyContent: "flex-start",
-    paddingTop: 100,
+    justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
   },

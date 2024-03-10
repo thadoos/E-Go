@@ -5,7 +5,7 @@ import { View, Text, ActivityIndicator, FlatList, StyleSheet } from 'react-nativ
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 
 export const MedicalBottomSheet = ({patientID, setSnapPoint}) => {
-  const snapPoints = useMemo(() => [25, 75, '50%', '75%', '100%'], []);
+  const snapPoints = useMemo(() => [25, 75, '20%','35%','50%', '75%', '100%'], []);
   const bottomSheetRef = useRef(null);
 
 

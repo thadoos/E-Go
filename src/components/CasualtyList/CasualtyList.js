@@ -21,7 +21,7 @@ const CasualtyList = ({setShowCasualtyModal, setfhirID, setCasualtyImage}) => {
     },
     {
       name: "Lace Gree",
-      imageName: require("../../../assets/userprofile.jpeg"),
+      imageName: require("../../../assets/UserPics/lace gree.jpeg"),
       fhirID: "1203"
     },
     {
@@ -39,7 +39,7 @@ const CasualtyList = ({setShowCasualtyModal, setfhirID, setCasualtyImage}) => {
       reducedTransparencyFallbackColor="white"
     >
       <View style={styles.modalContainer}>
-        <Text style={styles.title}>List of Casualties</Text>
+        <Text style={styles.title}>Pick Casualty</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
           data = { casualtyData }
@@ -51,7 +51,7 @@ const CasualtyList = ({setShowCasualtyModal, setfhirID, setCasualtyImage}) => {
                 style={styles.imageButton}
                 onPress={()=>handlePress(item.fhirID, item.imageName)}
               >
-                <Image source={item.imageName} style={styles.image} resizeMode="center"/>
+                <Image source={item.imageName} style={styles.image} />
 
 
               </TouchableOpacity>

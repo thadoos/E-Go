@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { AuthNavigation } from './src/navigation';
-
+// console.disableYellowBox = true;
+LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <AuthNavigation/>

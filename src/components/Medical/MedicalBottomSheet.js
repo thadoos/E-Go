@@ -5,16 +5,18 @@ import { View, Text, ActivityIndicator, FlatList, StyleSheet } from 'react-nativ
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 
 export const MedicalBottomSheet = ({patientID, setSnapPoint}) => {
-  const snapPoints = useMemo(() => [25, 200, '20%','50%', '64%', '100%'], []);
-
+  const snapPoints = useMemo(() => [25, 75, '50%', '75%', '100%'], []);
   const bottomSheetRef = useRef(null);
 
+
+  
   useEffect(() => {
 
     bottomSheetRef.current?.snapToIndex(setSnapPoint);
 
   }, [setSnapPoint]);
   console.log(bottomSheetRef)
+
   return(
     
       <BottomSheet 

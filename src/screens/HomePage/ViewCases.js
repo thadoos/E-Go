@@ -35,6 +35,8 @@ export const ViewCases = () => {
       </TouchableOpacity>
 
       <FlatList
+        style={styles.flatList}
+        showsVerticalScrollIndicator={false}
         data={casualties}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -58,7 +60,7 @@ export const ViewCases = () => {
         
         )}
       />
-      {showMedical && <MedicalBottomSheet patientID = {patientID} setSnapPoint={snapPoint}/>}
+      {showMedical && <MedicalBottomSheet patientID = {patientID} setSnapPoint={0} />}
 
       
     </View>
@@ -70,6 +72,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#DCE1DE",
     alignItems: "center",
+    
+  },
+  flatList:{
+    width:'90%',
+    marginBottom: 25,
   },
   refreshButton: {
     alignItems: 'center',
@@ -82,6 +89,7 @@ const styles = StyleSheet.create({
   },
   caseContainer: {
     backgroundColor: '#f2f2f2',
+    width:'100%',
     padding: 10,
     marginVertical: 5,
     borderRadius: 10,

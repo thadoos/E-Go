@@ -24,7 +24,7 @@ export const Map = () => {
   const [doctorLocation, setDoctorLocation] = useState(null);
   const [casualties, setCasualties] = useState([]);
   const mapRef = useRef(null);
-  const [patientID, setPatientID] = useState(null);
+  const [patientID, setPatientID] = useState(32954);
   const generateCasualties = async () => {
     const db = getDatabase();
     const casualtiesRef = ref(db, 'casualties');
